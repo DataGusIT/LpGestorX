@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
 
                 <div className="policy-content">
                     <p>
-                        No GestorX, sua privacidade é nossa prioridade máxima. Esta Política de Privacidade explica como lidamos com as informações, diferenciando claramente nosso site informativo ("Site") e nosso aplicativo de desktop ("Software").
+                        No GestorX, sua privacidade é nossa prioridade máxima. Esta Política de Privacidade explica como lidamos com as informações, diferenciando claramente nosso site informativo (&quot;Site&quot;) e nosso aplicativo de desktop (&quot;Software&quot;).
                     </p>
 
                     <h2>O Aplicativo GestorX: 100% Offline e Privado</h2>
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
 
                     <h2>Alterações na Política</h2>
                     <p>
-                        Podemos atualizar esta política de tempos em tempos. Notificaremos sobre quaisquer alterações, publicando a nova política nesta página e atualizando a data de "Última atualização".
+                        Podemos atualizar esta política de tempos em tempos. Notificaremos sobre quaisquer alterações, publicando a nova política nesta página e atualizando a data de &quot;Última atualização&quot;.
                     </p>
                 </div>
             </div>

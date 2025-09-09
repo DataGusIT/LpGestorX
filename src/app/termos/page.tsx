@@ -1,6 +1,6 @@
-import { Link } from "lucide-react";
-
 // app/termos/page.tsx
+import Link from 'next/link'; // IMPORTANTE: Importação do Link corrigida
+
 export default function TermsOfUsePage() {
     return (
         <main>
@@ -12,7 +12,7 @@ export default function TermsOfUsePage() {
 
                 <div className="policy-content">
                     <p>
-                        Bem-vindo ao GestorX! Ao baixar, instalar ou utilizar nosso software ("Software") e ao navegar em nosso site ("Site"), você concorda em cumprir os seguintes Termos de Uso.
+                        Bem-vindo ao GestorX! Ao baixar, instalar ou utilizar nosso software (&quot;Software&quot;) e ao navegar em nosso site (&quot;Site&quot;), você concorda em cumprir os seguintes Termos de Uso.
                     </p>
 
                     <h2>1. Licença do Software</h2>
@@ -30,7 +30,7 @@ export default function TermsOfUsePage() {
 
                     <h2>2. Isenção de Garantia</h2>
                     <p>
-                        O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A, GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO.
+                        O SOFTWARE É FORNECIDO &quot;COMO ESTÁ&quot;, SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A, GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO.
                     </p>
                     <p>
                         Por ser um software 100% offline, você é o único responsável pela segurança, gerenciamento e backup dos seus dados. Recomendamos a realização de backups regulares do arquivo do banco de dados.
