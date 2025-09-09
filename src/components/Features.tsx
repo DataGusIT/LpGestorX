@@ -1,38 +1,80 @@
+// app/components/Features.tsx
 'use client';
 
-import { DollarSign, Package, Users, BarChart, TrendingUp, Shield } from 'lucide-react';
+// Alterado: Novos ícones para representar os recursos reais
+import { DollarSign, Package, Users, BarChart, TrendingUp, Shield, Tags, UserCog } from 'lucide-react';
 import { motion } from 'framer-motion';
-import AnimateInView from './AnimateInView';
+import AnimateInView from './AnimateInView'
+import Link from 'next/link'; // Adicione a importação do Link
 
+// CORREÇÃO 2: Adicionada a propriedade 'accent' em cada objeto para corrigir o erro e reativar o efeito de brilho.
 const features = [
-    { icon: <DollarSign size={32} className="text-emerald-400" />, title: 'Módulo Financeiro', description: 'Controle total de contas a pagar, receber, fluxo de caixa e relatórios precisos.', accent: 'accent-emerald', stats: '98% Precisão' },
-    { icon: <Package size={32} className="text-blue-400" />, title: 'Gestão de Estoque', description: 'Otimize suas operações com controle de inventário inteligente e automatizado.', accent: 'accent-blue', stats: '50% Mais Eficiente' },
-    { icon: <Users size={32} className="text-purple-400" />, title: 'CRM Integrado', description: 'Gerencie o relacionamento com seus clientes desde o primeiro contato até o pós-venda.', accent: 'accent-purple', stats: '3x Mais Vendas' },
-    { icon: <BarChart size={32} className="text-amber-400" />, title: 'Business Intelligence', description: 'Tome decisões estratégicas baseadas em dados com painéis visuais interativos.', accent: 'accent-amber', stats: 'Insights em Tempo Real' },
-    { icon: <TrendingUp size={32} className="text-pink-400" />, title: 'Analytics Avançado', description: 'IA para previsões de vendas, detecção de padrões e otimização de processos.', accent: 'accent-pink', stats: 'IA Integrada' },
-    { icon: <Shield size={32} className="text-cyan-400" />, title: 'Segurança Avançada', description: 'Proteção multicamada com criptografia ponta a ponta e auditoria completa.', accent: 'accent-cyan', stats: 'ISO 27001' },
+    {
+        icon: <DollarSign size={32} className="text-emerald-400" />,
+        title: 'Módulo Financeiro Completo',
+        description: 'Controle total do caixa com aberturas, fechamentos, sangrias e relatórios detalhados. Gerencie todas as entradas e saídas.',
+        stats: 'Fluxo de Caixa',
+        accent: 'accent-emerald'
+    },
+    {
+        icon: <Package size={32} className="text-blue-400" />,
+        title: 'Gestão de Estoque Avançada',
+        description: 'Cadastro de produtos com código de barras, controle de validade, estoque mínimo, e suporte a produtos fracionados (unidade, kg, etc.).',
+        stats: 'Importação via CSV',
+        accent: 'accent-blue'
+    },
+    {
+        icon: <Users size={32} className="text-purple-400" />,
+        title: 'CRM (Clientes & Fornecedores)',
+        description: 'Mantenha um cadastro completo de seus clientes e fornecedores. Importe e exporte listas em CSV para facilitar a migração e o backup.',
+        stats: 'Relacionamento',
+        accent: 'accent-purple'
+    },
+    {
+        icon: <BarChart size={32} className="text-amber-400" />,
+        title: 'Dashboard e Business Intelligence',
+        description: 'Tome decisões com um painel visual que mostra faturamento, lucro líquido, ticket médio, produtos mais vendidos e alertas operacionais.',
+        stats: 'Decisões com Dados',
+        accent: 'accent-amber'
+    },
+    {
+        icon: <Tags size={32} className="text-pink-400" />,
+        title: 'Promoções Inteligentes',
+        description: 'Crie promoções flexíveis por período. Aplique descontos a embalagens, unidades avulsas ou ambos, com cálculo automático de preços.',
+        stats: 'Venda Mais',
+        accent: 'accent-pink'
+    },
+    {
+        icon: <UserCog size={32} className="text-cyan-400" />,
+        title: 'Controle de Usuários',
+        description: 'Crie perfis de usuário (Administrador, Comum) para controlar o acesso às diferentes áreas do sistema e visualize logs de atividades.',
+        stats: 'Segurança e Auditoria',
+        accent: 'accent-cyan'
+    },
 ];
 
 export default function Features() {
     return (
-        <section className="features-section">
+        <section id='recursos' className="features-section">
             <div className="relative container">
-                <div style={{ marginBottom: '5rem' }}>
-                    <AnimateInView className="benefits-header">
-                        <div className="benefits-badge">
-                            <BarChart size={16} className="text-blue-400" />
-                            <span>Recursos Principais</span>
-                        </div>
-                        <h2 className="features-title cta-title">
-                            <span className="gradient-text-white">Tudo que você precisa</span>
-                            <br />
-                            <span className="gradient-text-colored">em um só lugar</span>
-                        </h2>
-                        <p className="benefits-subtitle">
-                            Funcionalidades robustas e inteligentes para automatizar e otimizar cada setor da sua empresa.
-                        </p>
-                    </AnimateInView>
-                </div>
+                {/* 
+                  A CORREÇÃO FOI FEITA AQUI: 
+                  Removemos a propriedade 'style' e adicionamos a classe 'mb-20' para o espaçamento.
+                */}
+                <AnimateInView className="benefits-header mb-20">
+                    <div className="benefits-badge">
+                        <BarChart size={16} className="text-blue-400" />
+                        <span>Recursos Principais</span>
+                    </div>
+                    <h2 className="features-title cta-title">
+                        <span className="gradient-text-white">Tudo que você precisa</span>
+                        <br />
+                        <span className="gradient-text-colored">em um só lugar</span>
+                    </h2>
+                    <p className="benefits-subtitle">
+                        Funcionalidades robustas para automatizar e otimizar cada setor da sua empresa.
+                    </p>
+                </AnimateInView>
 
                 <div className="features-grid">
                     {features.map((feature, index) => (
@@ -48,7 +90,7 @@ export default function Features() {
                                     <div className="feature-card-badge"><span>{feature.stats}</span></div>
                                     <h3 className="feature-card-title">{feature.title}</h3>
                                     <p className="feature-card-description">{feature.description}</p>
-                                    <a href="#" className="feature-card-link">
+                                    <a href="/funcionalidades/financeiro" className="feature-card-link">
                                         Saiba mais
                                         <span>→</span>
                                     </a>
@@ -57,17 +99,6 @@ export default function Features() {
                         </AnimateInView>
                     ))}
                 </div>
-
-                <AnimateInView className="text-center" delay={0.8}>
-                    <div className="integration-card">
-                        <h3 className="benefit-card-title" style={{ backgroundImage: 'linear-gradient(to right, #60a5fa, #a78bfa)', backgroundClip: 'text', color: 'transparent', marginBottom: '1rem' }}>
-                            Integração Completa
-                        </h3>
-                        <p className="benefits-subtitle" style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.125rem' }}>
-                            Todos os módulos trabalham em perfeita harmonia para uma visão 360° do seu negócio.
-                        </p>
-                    </div>
-                </AnimateInView>
             </div>
         </section>
     );

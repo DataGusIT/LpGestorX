@@ -1,14 +1,13 @@
 // app/components/Hero.tsx
-'use client';
 
-// Você pode remover o import de 'motion' se não o usar em outros lugares,
-// mas vamos mantê-lo para as animações de entrada.
+'use client';
+import { Download, /* outros ícones que você usa */ } from 'lucide-react';
+
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
 
 export default function Hero() {
     return (
-        // Usando a classe CSS que criamos
         <section className="hero-section">
             <div className="hero-background"></div>
             <div className="hero-grid"></div>
@@ -21,7 +20,8 @@ export default function Hero() {
                     className="hero-badge"
                 >
                     <div className="hero-badge-dot"></div>
-                    <span>Sistema ERP Open Source</span>
+                    {/* Alterado: Reflete a tecnologia */}
+                    <span>Sistema Desktop Open Source</span>
                 </motion.div>
 
                 <motion.h1
@@ -30,9 +30,10 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.3 }}
                     className="hero-title"
                 >
-                    <span className="gradient-text-white">A revolução da gestão</span>
+                    {/* Alterado: Título mais direto e focado no benefício principal */}
+                    <span className="gradient-text-white">A Gestão Completa do seu Negócio</span>
                     <br />
-                    <span className="gradient-text-colored">ao seu alcance</span>
+                    <span className="gradient-text-colored">100% Offline e Sob seu Controle</span>
                 </motion.h1>
 
                 <motion.p
@@ -41,8 +42,9 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.5 }}
                     className="hero-paragraph"
                 >
-                    Um sistema ERP open source, <span className="text-blue">poderoso</span> e <span className="text-purple">intuitivo</span>, projetado para escalar com o seu negócio.
-                    <span className="subtext">Sem amarras, sem limites.</span>
+                    {/* Alterado: Descreve os módulos reais do sistema */}
+                    Um sistema ERP com Ponto de Venda (PDV), Controle de Estoque, Financeiro, Clientes e Fornecedores.
+                    <span className="subtext">Seus dados ficam no seu computador. Sem mensalidades, sem nuvem.</span>
                 </motion.p>
 
                 <motion.div
@@ -51,12 +53,12 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.7 }}
                     className="hero-buttons-container"
                 >
-                    <a href="#" className="btn btn-primary">
-                        <span>Solicitar Demo</span>
-                        <ArrowRight size={20} />
+                    <a href="#download" className="btn btn-primary">
+                        <span>Baixar Agora</span>
+                        <Download size={20} />
                     </a>
 
-                    <a href="#" className="btn btn-secondary">
+                    <a href="https://github.com/DataGusIT/EstacaoDoces" className="btn btn-secondary">
                         <Play size={18} />
                         <span>Ver no GitHub</span>
                     </a>
