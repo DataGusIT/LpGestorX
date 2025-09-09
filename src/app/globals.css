@@ -1015,7 +1015,7 @@ m .hero-title .gradient-text-white {
 }
 
 .stat-item h4 {
-  font-size: 2.25rem;
+  font-size: 1.25rem;
   font-weight: 700;
   background-clip: text;
   -webkit-background-clip: text;
@@ -2326,11 +2326,18 @@ m .hero-title .gradient-text-white {
    ========================================================================== */
 
 .financeiro-page-section {
-  padding-top: 120px;
+  padding-top: 0;
   padding-bottom: 80px;
-  background-color: #000;
   position: relative;
   min-height: 100vh;
+  /* 
+    AQUI ESTÁ A MUDANÇA: 
+    O gradiente foi movido para a seção PAI.
+    Adicionei #000 ao final para um fade-to-black suave.
+  */
+  background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.15), #000);
+  background-color: #000;
+  /* Fallback para navegadores antigos */
 }
 
 /* Modern Hero Section */
@@ -2339,7 +2346,19 @@ m .hero-title .gradient-text-white {
   grid-template-columns: 1fr;
   gap: 4rem;
   align-items: center;
-  padding: 6rem 0 8rem;
+  padding: 120px 0 8rem;
+  position: relative;
+  overflow: hidden;
+  /* 
+    IMPORTANTE: A linha de background-image foi REMOVIDA daqui.
+    O fundo agora é transparente, revelando o gradiente do pai.
+  */
+}
+
+/* O resto das suas classes .financeiro-* continua igual... */
+
+.financeiro-hero-content,
+.financeiro-hero-visual {
   position: relative;
 }
 
@@ -2954,4 +2973,15 @@ m .hero-title .gradient-text-white {
 
 .financeiro-page-section ::-webkit-scrollbar-thumb:hover {
   background: #5b52ec;
+}
+
+/* Adicione em app/globals.css se já não existir */
+@keyframes moveGradients {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
 }

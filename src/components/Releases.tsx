@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Rocket, Sparkles, Bug, ArrowRight, GitBranch, Link } from 'lucide-react';
+import Link from 'next/link'; // <-- CORREÇÃO: Importado de 'next/link'
+import { Rocket, Sparkles, Bug, ArrowRight, GitBranch } from 'lucide-react'; // <-- CORREÇÃO: 'Link' removido daqui
 import AnimateInView from './AnimateInView';
 
 // CONTEÚDO ATUALIZADO PARA O LANÇAMENTO INICIAL (v1.0)

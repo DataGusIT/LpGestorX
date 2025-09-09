@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download, ArrowRight, Github, Users, Link } from 'lucide-react';
+import Link from 'next/link'; // Importação correta
+import { Download, ArrowRight, Github, Users } from 'lucide-react';
 import AnimateInView from './AnimateInView';
 
 export default function CallToAction() {
@@ -11,6 +12,7 @@ export default function CallToAction() {
                 <AnimateInView className="cta-header">
                     <div className="cta-badge">
                         <div className="hero-badge-dot"></div>
+                        {/* Mantido: É um ótimo chamado */}
                         <span>Comece Gratuitamente</span>
                     </div>
 
@@ -20,32 +22,40 @@ export default function CallToAction() {
                         <span className="gradient-text-colored">sua gestão?</span>
                     </h2>
 
+                    {/* ALTERADO: Mensagem mais focada nos benefícios diretos */}
                     <p className="cta-subtitle">
-                        Junte-se à <span style={{ color: '#34d399', fontWeight: 500 }}>comunidade global</span> de empresas que já transformaram sua gestão com nosso ERP open source.
+                        Assuma o controle total da sua operação com uma ferramenta poderosa, gratuita e de código aberto.
                     </p>
 
                     <div className="cta-stats-grid">
                         <div className="stat-item">
-                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #60a5fa, #a78bfa)' }}>10K+</h4>
-                            <p>Empresas Ativas</p>
+                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #60a5fa, #a78bfa)' }}>
+                                Seus Dados,<br />Suas Regras
+                            </h4>
+                            <p>Operação 100% offline e privada</p>
                         </div>
                         <div className="stat-item">
-                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #34d399, #60a5fa)' }}>99.9%</h4>
-                            <p>Uptime</p>
+                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #34d399, #60a5fa)' }}>
+                                Código 100%<br />Aberto
+                            </h4>
+                            <p>Transparência total e sem vendor lock-in</p>
                         </div>
                         <div className="stat-item">
-                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #a78bfa, #f472b6)' }}>500+</h4>
-                            <p>Contribuidores</p>
+                            <h4 style={{ backgroundImage: 'linear-gradient(to right, #a78bfa, #f472b6)' }}>
+                                Sem Mensalidades
+                            </h4>
+                            <p>Uso gratuito para sempre, sem surpresas</p>
                         </div>
                     </div>
 
                     <div className="hero-buttons-container" style={{ marginBottom: '3rem' }}>
-                        <Link href="#" className="btn btn-cta-primary">
+                        <Link href="#download" className="btn btn-cta-primary">
                             <Download size={20} />
                             Download Gratuito
                             <ArrowRight size={18} />
                         </Link>
-                        <Link href="#" className="btn btn-secondary">
+                        {/* ALTERADO: Link aponta para o repositório correto */}
+                        <Link href="https://github.com/DataGusIT/EstacaoDoces" target="_blank" className="btn btn-secondary">
                             <Github size={18} />
                             Ver Código Fonte
                         </Link>
@@ -58,21 +68,23 @@ export default function CallToAction() {
                                 Junte-se à Comunidade
                             </h3>
                         </div>
+                        {/* ALTERADO: Descrição mais realista */}
                         <p className="benefits-subtitle" style={{ marginTop: 0, marginBottom: '2rem' }}>
-                            Participe de uma comunidade ativa de desenvolvedores, empresários e especialistas em ERP.
+                            Contribua com o projeto, tire dúvidas e compartilhe suas ideias com outros usuários e desenvolvedores.
                         </p>
                         <div className="community-card-grid">
+                            {/* ALTERADO: Itens mais realistas para um projeto open-source */}
                             <div className="community-item">
-                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Suporte 24/7</h4>
-                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Comunidade ativa e documentação completa</p>
+                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Suporte da Comunidade</h4>
+                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Acesso a guias, tutoriais e fóruns</p>
                             </div>
                             <div className="community-item">
-                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Atualizações Frequentes</h4>
-                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Novos recursos e melhorias mensais</p>
+                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Desenvolvimento Contínuo</h4>
+                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Melhorias constantes baseadas no feedback</p>
                             </div>
                             <div className="community-item">
-                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Setup em Minutos</h4>
-                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Docker, Kubernetes ou instalação tradicional</p>
+                                <h4 className="benefit-card-title" style={{ fontSize: '1.125rem' }}>Instalação Simples</h4>
+                                <p className="benefit-card-description" style={{ fontSize: '0.875rem' }}>Comece a usar em poucos cliques</p>
                             </div>
                         </div>
                     </div>

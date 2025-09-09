@@ -1,6 +1,9 @@
 // app/funcionalidades/financeiro/page.tsx
 import Image from 'next/image';
-import Link from 'next/link'; // IMPORTANTE: Importação do Link corrigida
+import Link from 'next/link';
+import Header from '@/components/Header'; // <-- 1. IMPORTADO O HEADER
+import Footer from '@/components/Footer'; // <-- 2. IMPORTADO O FOOTER
+import FinanceBackground from '@/components/FinanceBackground'; // <-- 2. IMPORTADO O BACKGROUND
 import { Download, Banknote, TrendingUp, Box, DollarSign, ArrowRight, CheckCircle, BarChart3, Zap } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
 
@@ -44,10 +47,13 @@ const benefits = [
 
 export default function FinanceiroPage() {
     return (
-        <main className="relative overflow-hidden">
-            {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-950/20 via-black to-purple-950/20" />
+        <main className="finance-page-main relative overflow-hidden">
+            <FinanceBackground /> {/* <-- 2. ADICIONE O COMPONENTE AQUI */}
 
+            <Header /> {/* <-- 2. ADICIONADO O HEADER AQUI */}
+
+            {/* REMOVA ESTA LINHA ABAIXO. ELA NÃO É MAIS NECESSÁRIA. */}
+            {/* <div className="page-background-overlay absolute inset-0 bg-gradient-to-br from-indigo-950/20 via-black to-purple-950/20" /> */}
             {/* Floating Elements */}
             <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full blur-3xl animate-pulse" />
             <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-r from-emerald-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -57,7 +63,7 @@ export default function FinanceiroPage() {
 
                     {/* --- HERO SECTION REDESIGNED --- */}
                     <AnimateInView>
-                        <header className="financeiro-hero-modern">
+                        <div className="financeiro-hero-modern">
                             <div className="financeiro-hero-content">
                                 <div className="financeiro-hero-badge">
                                     <BarChart3 size={16} />
@@ -105,40 +111,40 @@ export default function FinanceiroPage() {
                                     </div>
                                 </div>
                             </div>
-                        </header>
+                        </div>
                     </AnimateInView>
 
                     {/* --- FEATURES GRID REDESIGNED --- */}
-                    <div className="financeiro-features-section">
-                        <AnimateInView delay={0.1}>
+                    <AnimateInView delay={0.1}>
+                        <div className="financeiro-features-section">
                             <div className="financeiro-section-header">
                                 <h2 className="financeiro-section-title">Funcionalidades Avançadas</h2>
                                 <p className="financeiro-section-subtitle">
                                     Cada recurso foi pensado para simplificar sua gestão financeira
                                 </p>
                             </div>
-                        </AnimateInView>
 
-                        <div className="financeiro-features-grid">
-                            {financialFeatures.map((feature, index) => (
-                                <AnimateInView key={index} delay={index * 0.1 + 0.2}>
-                                    <div className={`financeiro-feature-card bg-gradient-to-br ${feature.gradient}`}>
-                                        <div className="financeiro-feature-card-header">
-                                            <div className="financeiro-feature-icon">
-                                                {feature.icon}
+                            <div className="financeiro-features-grid">
+                                {financialFeatures.map((feature, index) => (
+                                    <AnimateInView key={index} delay={index * 0.1 + 0.2}>
+                                        <div className={`financeiro-feature-card bg-gradient-to-br ${feature.gradient}`}>
+                                            <div className="financeiro-feature-card-header">
+                                                <div className="financeiro-feature-icon">
+                                                    {feature.icon}
+                                                </div>
+                                                <span className="financeiro-feature-highlight">{feature.highlight}</span>
                                             </div>
-                                            <span className="financeiro-feature-highlight">{feature.highlight}</span>
+                                            <h3 className="financeiro-feature-title">{feature.title}</h3>
+                                            <p className="financeiro-feature-description">{feature.description}</p>
+                                            <div className="financeiro-feature-arrow">
+                                                <ArrowRight size={16} className="text-gray-400 group-hover:text-white transition-colors" />
+                                            </div>
                                         </div>
-                                        <h3 className="financeiro-feature-title">{feature.title}</h3>
-                                        <p className="financeiro-feature-description">{feature.description}</p>
-                                        <div className="financeiro-feature-arrow">
-                                            <ArrowRight size={16} className="text-gray-400 group-hover:text-white transition-colors" />
-                                        </div>
-                                    </div>
-                                </AnimateInView>
-                            ))}
+                                    </AnimateInView>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    </AnimateInView>
 
                     {/* --- SHOWCASE SECTION REDESIGNED --- */}
                     <AnimateInView delay={0.4}>
@@ -213,6 +219,7 @@ export default function FinanceiroPage() {
 
                 </div>
             </section>
+            <Footer /> {/* <-- 2. ADICIONE O COMPONENTE FOOTER AQUI, ANTES DE FECHAR O <main> */}
         </main>
     );
 }

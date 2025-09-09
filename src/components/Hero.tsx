@@ -1,10 +1,10 @@
 // app/components/Hero.tsx
 
 'use client';
-import { Download, Link, /* outros ícones que você usa */ } from 'lucide-react';
-
+import Link from 'next/link'; // 1. Importado o Link de 'next/link' para navegação
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { Download, Play } from 'lucide-react'; // 2. 'Link' foi removido desta importação
+
 
 export default function Hero() {
     return (

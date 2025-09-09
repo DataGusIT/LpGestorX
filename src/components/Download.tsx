@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck, Link } from 'lucide-react';
+import Link from 'next/link'; // <-- CORREÇÃO: Importado de 'next/link'
+import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck } from 'lucide-react'; // <-- CORREÇÃO: 'Link' removido daqui
 import AnimateInView from './AnimateInView';
 
 // Ícone do Windows (mantido como está)

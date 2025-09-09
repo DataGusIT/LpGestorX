@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
-import { Link, Menu, X } from 'lucide-react';
+import Link from 'next/link'; // <-- CORREÇÃO: Importado de 'next/link' para navegação
+import { Menu, X } from 'lucide-react'; // <-- CORREÇÃO: 'Link' foi removido desta linha
 import { useState, useEffect } from 'react';
 
 const menuVariants: Variants = {
@@ -31,8 +32,12 @@ export default function Header() {
         };
     }, [isMenuOpen]);
 
+    // Função para fechar o menu ao clicar em um link
+    const handleLinkClick = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
-        // MUDANÇA 1: Usamos um Fragmento <> para retornar múltiplos elementos
         <>
             <motion.header
                 initial={{ y: -80 }}
@@ -41,7 +46,8 @@ export default function Header() {
                 className="site-header"
             >
                 <div className="header-container">
-                    <Link href="#" className="header-logo">
+                    {/* Agora este Link funcionará corretamente */}
+                    <Link href="/" className="header-logo" onClick={handleLinkClick}>
                         <div className="header-logo-icon-wrapper">
                             <Image
                                 src="/images/Logo.png"
@@ -53,18 +59,13 @@ export default function Header() {
                         <h1 className="gradient-text-blue">GestorX</h1>
                     </Link>
 
+                    {/* E estes também */}
                     <nav className="header-nav-desktop">
                         <Link href="#recursos">Recursos <span className="nav-link-underline"></span></Link>
                         <Link href="#vantagens">Vantagens <span className="nav-link-underline"></span></Link>
-                        <Link href="#faq">Dúvida <span className="nav-link-underline"></span></Link>
+                        <Link href="#faq">Dúvidas <span className="nav-link-underline"></span></Link>
                         <Link href="#download">Download <span className="nav-link-underline"></span></Link>
                     </nav>
-
-                    {/* 
-                          AS DUAS LINHAS ABAIXO FORAM REMOVIDAS:
-                          <a href="#" style={{...}}>Login</a>
-                          <a href="#" className="btn-header-cta" style={{...}}>Começar Agora</a>
-                        */}
 
                     <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -72,7 +73,6 @@ export default function Header() {
                 </div>
             </motion.header>
 
-            {/* MUDANÇA 2: O menu agora está FORA (é um irmão) do <motion.header> */}
             {isMenuOpen && (
                 <motion.div
                     initial="hidden"
@@ -82,15 +82,11 @@ export default function Header() {
                     className="mobile-menu"
                 >
                     <div className="mobile-menu-content">
-                        <Link href="#recursos">Recursos</Link>
-                        <Link href="#vantagens">Vantagens</Link>
-                        <Link href="#faq">Dúvida</Link>
-                        <Link href="#download">Download</Link>
-                        {/* 
-                          AS DUAS LINHAS ABAIXO FORAM REMOVIDAS:
-                          <Link href="#" style={{...}}>Login</Link>
-                          <Link href="#" className="btn-header-cta" style={{...}}>Começar Agora</Link>
-                        */}
+                        {/* Adicionei 'onClick' aqui para o menu fechar no mobile */}
+                        <Link href="#recursos" onClick={handleLinkClick}>Recursos</Link>
+                        <Link href="#vantagens" onClick={handleLinkClick}>Vantagens</Link>
+                        <Link href="#faq" onClick={handleLinkClick}>Dúvidas</Link>
+                        <Link href="#download" onClick={handleLinkClick}>Download</Link>
                     </div>
                 </motion.div>
             )}
