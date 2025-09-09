@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link'; // <-- CORREÇÃO: Importado de 'next/link'
-import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck } from 'lucide-react'; // <-- CORREÇÃO: 'Link' removido daqui
+import Link from 'next/link'; // Mantendo a importação do Link
+import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck } from 'lucide-react';
 import AnimateInView from './AnimateInView';
 
 // Ícone do Windows (mantido como está)
@@ -12,7 +12,7 @@ const WindowsIcon = () => (
     </svg>
 );
 
-// Requisitos de sistema (mantidos como estão)
+// Requisitos de sistema agora serão exibidos
 const requirements = [
     { icon: <Cpu size={16} />, text: 'Windows 10 (64-bit) ou superior' },
     { icon: <HardDrive size={16} />, text: '4GB RAM (8GB recomendado)' },
@@ -28,12 +28,10 @@ export default function Download() {
                         <DownloadIcon size={16} className="text-blue-400" />
                         <span>Download para Windows</span>
                     </div>
-                    {/* --- TÍTULO ATUALIZADO AQUI --- */}
                     <h2 className="benefits-title cta-title">
                         <span className="gradient-text-white">Comece a Usar </span>
                         <span className="gradient-text-colored">Agora</span>
                     </h2>
-                    {/* CONTEÚDO ATUALIZADO */}
                     <p className="benefits-subtitle">
                         Baixe a versão mais recente do GestorX. A instalação é simples, rápida e 100% offline.
                     </p>
@@ -45,13 +43,29 @@ export default function Download() {
                             <WindowsIcon />
                         </div>
                         <div className="download-card-info">
-                            {/* CONTEÚDO ATUALIZADO */}
                             <h3>GestorX para Windows</h3>
                             <p>Primeira versão estável, compatível com sistemas 64-bit.</p>
-                            <Link href="#" className="btn-download">
+
+                            {/* --- MUDANÇA: Usando o componente Link do Next.js --- */}
+                            <Link
+                                href="/downloads/GestorXSetup.exe"
+                                className="btn-download"
+                            >
                                 <DownloadIcon size={20} />
                                 Baixar Agora (v1.0)
                             </Link>
+
+                            <div>
+                                <h4 className="requirements-title">Requisitos Mínimos:</h4>
+                                <ul className="requirements-list">
+                                    {requirements.map((req, index) => (
+                                        <li key={index}>
+                                            {req.icon}
+                                            <span>{req.text}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </AnimateInView>
@@ -60,7 +74,6 @@ export default function Download() {
                     <div className="privacy-note">
                         <ShieldCheck size={48} className="text-emerald-400 flex-shrink-0" />
                         <p>
-                            {/* CONTEÚDO ATUALIZADO */}
                             <strong>100% Offline. Seus Dados, Suas Regras.</strong>
                             O GestorX armazena tudo localmente no seu computador. Privacidade total, sem surpresas.
                         </p>

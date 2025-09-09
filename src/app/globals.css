@@ -1,5 +1,17 @@
-/* ap/* app/globals.css */
+/* app/globals.css */
 @import "tailwindcss";
+
+/* purgecss start ignore */
+.backdrop-blur,
+.backdrop-blur-sm,
+.backdrop-blur-md,
+.backdrop-blur-lg,
+.backdrop-blur-xl,
+.backdrop-blur-2xl,
+.backdrop-blur-3xl {
+  /* Adiciona uma propriedade inofensiva para evitar o erro de regra vazia */
+  --safelist-hack: 1;
+}
 
 /* ==========================================================================
    Otimizações Globais de Performance
@@ -2745,6 +2757,7 @@ m .hero-title .gradient-text-white {
   font-weight: 700;
   color: white;
   margin-bottom: 0.5rem;
+  font-size: clamp(1.75rem, 6vw, 2rem);
 }
 
 .financeiro-stat-label {
@@ -2984,4 +2997,909 @@ m .hero-title .gradient-text-white {
   100% {
     background-position: 100% 100%;
   }
+}
+
+/* ==========================================================================
+   MELHORIAS DE RESPONSIVIDADE
+   ========================================================================== */
+
+/* 1. Tipografia Fluida e Adaptativa
+   ========================================================================== */
+/* Títulos principais (como na Hero) ficarão menores em telas pequenas */
+.hero-title,
+.financeiro-hero-title {
+  /* Mínimo de 2.5rem, ideal de 8vw, máximo de 4.5rem */
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.1;
+}
+
+/* Títulos de seção (H2) também se adaptarão */
+.benefits-title,
+.cta-title,
+.features-title,
+.financeiro-section-title,
+.financeiro-showcase-title {
+  /* Mínimo de 2rem, ideal de 7vw, máximo de 3.5rem */
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1.2;
+}
+
+/* Parágrafos principais também terão um ajuste sutil */
+.hero-paragraph,
+.financeiro-hero-description {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+
+/* 2. Ajustes de Layout para Telas Menores (Tablets e Celulares)
+   ========================================================================== */
+@media (max-width: 768px) {
+
+  /* Reduz o espaçamento vertical de todas as seções principais */
+  .hero-section,
+  .benefits-section,
+  .cta-section,
+  .features-section,
+  .gallery-section,
+  .faq-section,
+  .releases-section,
+  .download-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Ajusta o padding da Hero para não ficar tão grande no topo */
+  .hero-container {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Na página Financeiro, o padding da Hero também é ajustado */
+  .financeiro-hero-modern {
+    padding-top: 100px;
+    /* Reduz um pouco o espaço para o menu */
+    padding-bottom: 4rem;
+    gap: 3rem;
+    /* Diminui o espaço entre o texto e o card visual */
+  }
+
+  .financeiro-features-section,
+  .financeiro-showcase-section {
+    margin: 4rem 0;
+    /* Diminui a margem entre as seções */
+  }
+
+  /* Garante que o CTA final tenha um padding adequado */
+  .financeiro-final-cta-modern {
+    padding: 3rem 1.5rem;
+    margin-top: 4rem;
+  }
+
+  /* Centraliza o texto da seção Showcase quando ele fica acima da imagem */
+  .financeiro-showcase-content {
+    text-align: center;
+  }
+
+  .financeiro-showcase-stats {
+    margin: 0 auto 2rem auto;
+    /* Centraliza as estatísticas */
+  }
+
+  /* Diminui o tamanho dos títulos dos cards para caber melhor */
+  .benefit-card-title,
+  .feature-card-title {
+    font-size: 1.25rem;
+  }
+
+  .financeiro-showcase-stats {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    max-width: 300px;
+  }
+
+  .financeiro-stat-number {
+    font-size: clamp(1.75rem, 6vw, 2rem);
+  }
+
+  /* Ajusta o layout do rodapé para ser mais compacto */
+  .footer-grid {
+    gap: 2rem;
+  }
+
+  .footer-main {
+    padding: 3rem 0;
+  }
+}
+
+
+/* 3. Ajustes Específicos para Celulares
+   ========================================================================== */
+@media (max-width: 640px) {
+
+  /* Na página Financeiro, a lista de benefícios fica em uma única coluna */
+  .financeiro-hero-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  /* O card visual na Hero da pág. Financeiro fica um pouco menos largo */
+  .financeiro-floating-card {
+    max-width: 350px;
+  }
+
+  /* Diminui o tamanho da fonte dos títulos dos itens do rodapé */
+  .footer-links-column h4 {
+    font-size: 1rem;
+  }
+}
+
+/* Card principal com efeitos avançados */
+.financeiro-card-enhanced {
+  position: relative;
+  background: linear-gradient(135deg,
+      rgba(15, 23, 42, 0.95) 0%,
+      rgba(30, 41, 59, 0.9) 50%,
+      rgba(15, 23, 42, 0.95) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+/* Efeito de partículas de fundo */
+.financeiro-particles-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(45deg, #3b82f6, #06b6d4);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 8s;
+}
+
+.particle:nth-child(2) {
+  top: 60%;
+  left: 80%;
+  animation-delay: 2s;
+  animation-duration: 6s;
+}
+
+.particle:nth-child(3) {
+  top: 80%;
+  left: 20%;
+  animation-delay: 4s;
+  animation-duration: 10s;
+}
+
+.particle:nth-child(4) {
+  top: 30%;
+  left: 70%;
+  animation-delay: 1s;
+  animation-duration: 7s;
+}
+
+.particle:nth-child(5) {
+  top: 50%;
+  left: 50%;
+  animation-delay: 3s;
+  animation-duration: 9s;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.6;
+  }
+
+  33% {
+    transform: translateY(-15px) translateX(10px) scale(1.2);
+    opacity: 0.8;
+  }
+
+  66% {
+    transform: translateY(15px) translateX(-10px) scale(0.8);
+    opacity: 0.4;
+  }
+}
+
+/* Gradiente animado de borda */
+.financeiro-card-border-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg,
+      #3b82f6, #06b6d4, #10b981, #3b82f6);
+  background-size: 300% 300%;
+  border-radius: 22px;
+  z-index: -1;
+  animation: gradientRotate 4s ease infinite;
+  opacity: 0.7;
+  filter: blur(1px);
+}
+
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Header aprimorado */
+.financeiro-card-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Mini indicadores */
+.financeiro-mini-indicators {
+  display: flex;
+  gap: 4px;
+}
+
+.mini-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mini-dot.active {
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+/* Barras do gráfico com efeitos */
+.financeiro-chart-bar {
+  position: relative;
+  background: linear-gradient(to top,
+      #3b82f6 0%,
+      #06b6d4 50%,
+      #10b981 100%);
+  border-radius: 4px 4px 2px 2px;
+  overflow: hidden;
+}
+
+.bar-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
+  border-radius: 4px 4px 0 0;
+}
+
+.bar-tooltip {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.financeiro-chart-bar:hover .bar-tooltip {
+  opacity: 1;
+}
+
+/* Métricas com efeitos */
+.financeiro-metric-label {
+  position: relative;
+  display: inline-block;
+}
+
+.label-underline {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #3b82f6;
+  transition: width 0.5s ease;
+}
+
+.label-underline.emerald {
+  background: #10b981;
+}
+
+.financeiro-metric:hover .label-underline {
+  width: 100%;
+}
+
+/* Efeito de reflexão */
+.financeiro-card-reflection {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
+  transform: skewX(-20deg);
+  animation: shine 3s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+
+  50% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+/* Luzes ambiente */
+.ambient-light {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.3;
+  animation: ambientPulse 4s ease-in-out infinite;
+}
+
+.ambient-light.top-left {
+  top: -40px;
+  left: -40px;
+  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+  animation-delay: 0s;
+}
+
+.ambient-light.bottom-right {
+  bottom: -40px;
+  right: -40px;
+  background: radial-gradient(circle, #10b981 0%, transparent 70%);
+  animation-delay: 2s;
+}
+
+@keyframes ambientPulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .financeiro-card-enhanced {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .particle {
+    width: 1px;
+    height: 1px;
+  }
+
+  .ambient-light {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ==========================================================================
+   Animação de Barras de Estoque - ESPECÍFICO PARA PÁGINA FINANCEIRO
+   ========================================================================== */
+/* ==========================================================================
+   Animações de Estoque Avançadas - ESPECÍFICO PARA PÁGINA DE ESTOQUE
+   ========================================================================== */
+
+/* Container para partículas flutuantes */
+.floating-particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Partículas individuais */
+.floating-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(96, 165, 250, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Card de estoque avançado */
+.advanced-stock-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15, 15, 35, 0.95) !important;
+  border: 1px solid rgba(96, 165, 250, 0.2) !important;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(96, 165, 250, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px);
+}
+
+/* Efeito de onda */
+.wave-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Badge de alerta animado */
+.alert-badge-animated {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0;
+  transform: scale(0);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+  z-index: 10;
+}
+
+/* Status indicator com pulse */
+.status-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 5px #10b981;
+  }
+
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 20px #10b981;
+  }
+}
+
+/* Grid de métricas expandida */
+.metrics-grid-expanded {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.metric-card-animated {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.metric-card-animated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #34d399, transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.metric-card-animated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.2);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+/* Barras de progresso */
+.progress-bar-container {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transform: translateX(-100%);
+}
+
+.progress-blue {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.progress-amber {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.progress-emerald {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.progress-purple {
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+}
+
+/* Gráfico melhorado */
+.enhanced-chart {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+/* Wrapper para a animação das barras de estoque */
+.estoque-chart-bar-wrapper {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+}
+
+/* Barras do gráfico melhoradas */
+.estoque-chart-bar {
+  background: linear-gradient(to top, #1e40af, #3b82f6, #60a5fa);
+  border-radius: 6px 6px 0 0;
+  width: 100%;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.estoque-chart-bar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+}
+
+/* Efeito de brilho nas barras */
+.chart-bar-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.8));
+  border-radius: 6px 6px 0 0;
+  opacity: 0;
+}
+
+/* Grid de inventário */
+.inventory-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.inventory-item-animated {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.75rem;
+  text-align: center;
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.inventory-item-animated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #34d399, transparent);
+  animation: shimmer-slow 4s infinite;
+}
+
+@keyframes shimmer-slow {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.inventory-item-animated:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(52, 211, 153, 0.2);
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.inventory-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-radius: 6px;
+  margin: 0 auto 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.inventory-item-animated:hover .inventory-icon {
+  transform: rotate(5deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.inventory-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.inventory-stock {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Animações específicas para métricas */
+.financeiro-metric-value {
+  font-size: 1.5rem !important;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.metric-card-animated:hover .financeiro-metric-value {
+  transform: scale(1.05);
+}
+
+.financeiro-metric-label {
+  font-size: 0.75rem !important;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Melhorias no header do dashboard */
+.dashboard-header-animated {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard-header-animated span {
+  background: linear-gradient(135deg, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Efeitos de hover globais para o card */
+.advanced-stock-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(96, 165, 250, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Animação de respiração para elementos importantes */
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+.alert-badge-animated {
+  animation: breathe 3s infinite ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .metrics-grid-expanded {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .inventory-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .advanced-stock-card {
+    padding: 1.5rem !important;
+  }
+
+  .alert-badge-animated {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+  }
+
+  .floating-particles-container {
+    display: none;
+    /* Hide particles on mobile for performance */
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid-expanded {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .financeiro-metric-value {
+    font-size: 1.25rem !important;
+  }
+
+  .inventory-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark theme enhancements */
+@media (prefers-color-scheme: dark) {
+  .advanced-stock-card {
+    background: rgba(10, 10, 25, 0.98) !important;
+    border-color: rgba(96, 165, 250, 0.15) !important;
+  }
+
+  .metric-card-animated {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .inventory-item-animated {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Loading states for better UX */
+.financeiro-floating-card[style*="opacity: 0"] {
+  pointer-events: none;
+}
+
+.financeiro-floating-card[style*="visibility: hidden"] {
+  pointer-events: none;
+}
+
+/* Performance optimizations */
+.estoque-chart-bar,
+.metric-card-animated,
+.inventory-item-animated {
+  will-change: transform, opacity;
+}
+
+.floating-particle {
+  will-change: transform, opacity;
 }

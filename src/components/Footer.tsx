@@ -33,11 +33,18 @@ const footerLinksConfig = {
 };
 
 const socialLinksConfig = [
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    {
+        icon: Github,
+        href: 'https://github.com/DataGusIT/EstacaoDoces',
+        label: 'GitHub'
+    },
+    {
+        icon: Linkedin,
+        href: 'https://www.linkedin.com/in/gustavomorenoit/',
+        label: 'LinkedIn'
+    },
+    // O Twitter foi removido
 ];
-
 // --- ANIMAÇÕES (Mantidas como estão) ---
 const containerVariants = {
     hidden: { opacity: 0 },

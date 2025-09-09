@@ -1,11 +1,19 @@
 // app/funcionalidades/financeiro/page.tsx
+
+"use client"; // <-- AQUI ESTÁ A CORREÇÃO!
+
 import Image from 'next/image';
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from 'next/link';
 import Header from '@/components/Header'; // <-- 1. IMPORTADO O HEADER
 import Footer from '@/components/Footer'; // <-- 2. IMPORTADO O FOOTER
 import FinanceBackground from '@/components/FinanceBackground'; // <-- 2. IMPORTADO O BACKGROUND
 import { Download, Banknote, TrendingUp, Box, DollarSign, ArrowRight, CheckCircle, BarChart3, Zap } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const financialFeatures = [
     {
@@ -46,6 +54,294 @@ const benefits = [
 ];
 
 export default function FinanceiroPage() {
+    // 1. Crie uma ref para o contêiner do card
+    const cardRef = useRef(null);
+
+    // 2. Use useEffect para animar o card quando o componente montar
+    useEffect(() => {
+        const card = cardRef.current as HTMLElement | null;
+        if (!card) {
+            console.log('Card ref não encontrado');
+            return;
+        }
+
+        console.log('Card encontrado, iniciando animação...');
+
+        // Buscar elementos com verificação de tipos mais segura
+        const chartBars = Array.from(card.querySelectorAll('.financeiro-chart-bar')) as HTMLElement[];
+        const metricValues = Array.from(card.querySelectorAll('.financeiro-metric-value')) as HTMLElement[];
+        const cardHeader = card.querySelector('.financeiro-card-header') as HTMLElement | null;
+        const statusIndicator = card.querySelector('.financeiro-status-indicator') as HTMLElement | null;
+        const metricsContainer = card.querySelector('.financeiro-metrics') as HTMLElement | null;
+
+        console.log('Elementos encontrados:', {
+            chartBars: chartBars.length,
+            metricValues: metricValues.length,
+            cardHeader: !!cardHeader,
+            statusIndicator: !!statusIndicator
+        });
+
+        // 1. SETUP INICIAL - Preparar elementos para animação
+        gsap.set(card, {
+            autoAlpha: 0,
+            scale: 0.8,
+            rotateY: -15,
+            transformPerspective: 1000,
+            transformOrigin: "center center"
+        });
+
+        if (chartBars.length > 0) {
+            gsap.set(chartBars, {
+                scaleY: 0,
+                scaleX: 0.8,
+                transformOrigin: 'bottom center',
+                filter: 'blur(10px)',
+                opacity: 0
+            });
+        }
+
+        // Preparar elementos do header e métricas se existirem
+        const elementsToFadeIn: HTMLElement[] = [];
+        if (cardHeader) elementsToFadeIn.push(cardHeader);
+        if (metricsContainer) elementsToFadeIn.push(metricsContainer);
+
+        if (elementsToFadeIn.length > 0) {
+            gsap.set(elementsToFadeIn, {
+                y: 30,
+                opacity: 0,
+                filter: 'blur(5px)'
+            });
+        }
+
+        // 2. TIMELINE PRINCIPAL - Sequência cinematográfica
+        const masterTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none reverse",
+                onEnter: () => console.log('Animação iniciada!'),
+                // markers: true // Descomente para debug
+            }
+        });
+
+        // FASE 1: Entrada dramática do card
+        masterTL.to(card, {
+            duration: 1.2,
+            autoAlpha: 1,
+            scale: 1,
+            rotateY: 0,
+            ease: "back.out(1.2)",
+            transformOrigin: "center center",
+            onComplete: () => console.log('Entrada do card completa')
+        });
+
+        // FASE 2: Efeito de "materialização" do header
+        if (cardHeader) {
+            masterTL.to(cardHeader, {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                filter: 'blur(0px)',
+                ease: "power3.out"
+            }, "-=0.6");
+        }
+
+        // FASE 3: Animação das barras com efeito líquido
+        if (chartBars.length > 0) {
+            masterTL.to(chartBars, {
+                duration: 1.5,
+                scaleY: 1,
+                scaleX: 1,
+                opacity: 1,
+                filter: 'blur(0px)',
+                ease: "elastic.out(1, 0.6)",
+                stagger: {
+                    amount: 0.8,
+                    from: "center",
+                    ease: "power2.inOut"
+                },
+                onComplete: () => console.log('Animação das barras completa')
+            }, "-=0.4");
+
+            // FASE 4: Efeito de "onda" nas barras
+            masterTL.to(chartBars, {
+                duration: 0.6,
+                scaleY: 1.1,
+                ease: "sine.inOut",
+                stagger: {
+                    amount: 0.3,
+                    yoyo: true,
+                    repeat: 1
+                }
+            });
+        }
+
+        // FASE 5: Entrada suave das métricas
+        if (metricsContainer) {
+            masterTL.to(metricsContainer, {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                filter: 'blur(0px)',
+                ease: "power3.out"
+            }, "-=0.4");
+        }
+
+        // 3. ANIMAÇÃO DOS NÚMEROS - Contador sofisticado
+        if (metricValues.length > 0) {
+            metricValues.forEach((element, index) => {
+                const isRevenue = index === 0;
+                const targetValue = isRevenue ? 45670 : 28.5;
+                const counter = { value: 0 };
+
+                masterTL.to(counter, {
+                    duration: 2,
+                    value: targetValue,
+                    ease: "power2.out",
+                    delay: index * 0.3,
+                    onUpdate: function () {
+                        if (isRevenue) {
+                            const currentValue = Math.floor(counter.value);
+                            element.textContent = `R$ ${currentValue.toLocaleString('pt-BR')}`;
+
+                            // Efeito de "glow" durante a contagem
+                            const intensity = Math.sin(counter.value / targetValue * Math.PI) * 0.3;
+                            element.style.textShadow = `0 0 ${intensity * 20}px rgba(52, 211, 153, ${intensity})`;
+                        } else {
+                            const currentValue = Math.round(counter.value * 10) / 10;
+                            element.textContent = `+${currentValue}%`;
+
+                            // Efeito de "pulse" na porcentagem
+                            const scale = 1 + Math.sin(counter.value / targetValue * Math.PI * 2) * 0.05;
+                            element.style.transform = `scale(${scale})`;
+                        }
+                    },
+                    onComplete: () => {
+                        // Remover efeitos após completar
+                        element.style.textShadow = 'none';
+                        element.style.transform = 'none';
+                        console.log(`Animação do número ${index + 1} completa`);
+                    }
+                }, "-=1.5");
+            });
+        }
+
+        // 4. ANIMAÇÕES CONTÍNUAS - Efeitos ambient
+
+        // Indicador de status pulsante
+        if (statusIndicator) {
+            gsap.to(statusIndicator, {
+                duration: 2,
+                scale: 1.2,
+                opacity: 0.7,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            });
+        }
+
+        // Efeito sutil de flutuação no card
+        masterTL.to(card, {
+            duration: 4,
+            y: -5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 1
+        });
+
+        // Animação contínua das barras (respiração)
+        let breathingTL: gsap.core.Timeline | null = null;
+
+        if (chartBars.length > 0) {
+            breathingTL = gsap.timeline({ repeat: -1, delay: 3 });
+            breathingTL.to(chartBars, {
+                duration: 3,
+                scaleY: () => gsap.utils.random(0.95, 1.05),
+                ease: "sine.inOut",
+                stagger: {
+                    amount: 1,
+                    from: "random"
+                }
+            })
+                .to(chartBars, {
+                    duration: 3,
+                    scaleY: 1,
+                    ease: "sine.inOut",
+                    stagger: {
+                        amount: 1,
+                        from: "random"
+                    }
+                });
+        }
+
+        // 5. INTERAÇÕES HOVER - Efeitos responsivos
+        const handleCardHover = () => {
+            gsap.to(card, {
+                duration: 0.3,
+                scale: 1.02,
+                y: -10,
+                rotateX: 5,
+                boxShadow: "0 25px 50px rgba(0,0,0,0.3)",
+                ease: "power2.out"
+            });
+
+            if (chartBars.length > 0) {
+                gsap.to(chartBars, {
+                    duration: 0.4,
+                    scaleY: 1.1,
+                    filter: 'brightness(1.1)',
+                    ease: "power2.out",
+                    stagger: 0.05
+                });
+            }
+        };
+
+        const handleCardLeave = () => {
+            gsap.to(card, {
+                duration: 0.5,
+                scale: 1,
+                y: 0,
+                rotateX: 0,
+                boxShadow: "0 15px 30px rgba(0,0,0,0.2)",
+                ease: "power2.out"
+            });
+
+            if (chartBars.length > 0) {
+                gsap.to(chartBars, {
+                    duration: 0.5,
+                    scaleY: 1,
+                    filter: 'brightness(1)',
+                    ease: "power2.out",
+                    stagger: 0.03
+                });
+            }
+        };
+
+        // Adicionar event listeners
+        card.addEventListener('mouseenter', handleCardHover);
+        card.addEventListener('mouseleave', handleCardLeave);
+
+        // 6. CLEANUP - Limpar ao desmontar
+        return () => {
+            console.log('Limpando animações...');
+
+            card.removeEventListener('mouseenter', handleCardHover);
+            card.removeEventListener('mouseleave', handleCardLeave);
+
+            masterTL.kill();
+            if (breathingTL) breathingTL.kill();
+
+            // Limpar todos os ScrollTriggers desta instância
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.trigger === card) {
+                    trigger.kill();
+                }
+            });
+        };
+
+    }, []);
     return (
         <main className="finance-page-main relative overflow-hidden">
             <FinanceBackground /> {/* <-- 2. ADICIONE O COMPONENTE AQUI */}
@@ -62,57 +358,107 @@ export default function FinanceiroPage() {
                 <div className="container">
 
                     {/* --- HERO SECTION REDESIGNED --- */}
-                    <AnimateInView>
-                        <div className="financeiro-hero-modern">
-                            <div className="financeiro-hero-content">
-                                <div className="financeiro-hero-badge">
-                                    <BarChart3 size={16} />
-                                    <span>Módulo Financeiro</span>
-                                </div>
-                                <h1 className="financeiro-hero-title">
-                                    Controle Financeiro
-                                    <span className="financeiro-gradient-text"> Inteligente</span>
-                                </h1>
-                                <p className="financeiro-hero-description">
-                                    O epicentro do seu negócio. Visualize a saúde financeira da sua empresa,
-                                    controle cada transação e tome decisões baseadas em dados precisos e em tempo real.
-                                </p>
-                                <div className="financeiro-hero-benefits">
-                                    {benefits.map((benefit, index) => (
-                                        <div key={index} className="financeiro-benefit-item">
-                                            <CheckCircle size={16} className="text-emerald-400" />
-                                            <span>{benefit}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                    {/* --- HERO SECTION REDESIGNED --- */}
+                    {/* AQUI ESTÁ A CORREÇÃO: <AnimateInView> foi removido */}
+                    <div className="financeiro-hero-modern">
+                        <div className="financeiro-hero-content">
+                            <div className="financeiro-hero-badge">
+                                <BarChart3 size={16} />
+                                <span>Módulo Financeiro</span>
                             </div>
-                            <div className="financeiro-hero-visual">
-                                <div className="financeiro-floating-card">
-                                    <div className="financeiro-card-header">
-                                        <div className="financeiro-status-indicator"></div>
-                                        <span>Dashboard Financeiro</span>
+                            <h1 className="financeiro-hero-title">
+                                Controle Financeiro
+                                <span className="financeiro-gradient-text"> Inteligente</span>
+                            </h1>
+                            <p className="financeiro-hero-description">
+                                O epicentro do seu negócio. Visualize a saúde financeira da sua empresa,
+                                controle cada transação e tome decisões baseadas em dados precisos e em tempo real.
+                            </p>
+                            <div className="financeiro-hero-benefits">
+                                {benefits.map((benefit, index) => (
+                                    <div key={index} className="financeiro-benefit-item">
+                                        <CheckCircle size={16} className="text-emerald-400" />
+                                        <span>{benefit}</span>
                                     </div>
-                                    <div className="financeiro-chart-simulation">
-                                        <div className="financeiro-chart-bar" style={{ height: '60%' }}></div>
-                                        <div className="financeiro-chart-bar" style={{ height: '80%' }}></div>
-                                        <div className="financeiro-chart-bar" style={{ height: '45%' }}></div>
-                                        <div className="financeiro-chart-bar" style={{ height: '90%' }}></div>
-                                        <div className="financeiro-chart-bar" style={{ height: '70%' }}></div>
-                                    </div>
-                                    <div className="financeiro-metrics">
-                                        <div className="financeiro-metric">
-                                            <span className="financeiro-metric-label">Faturamento</span>
-                                            <span className="financeiro-metric-value">R$ 45.670</span>
-                                        </div>
-                                        <div className="financeiro-metric">
-                                            <span className="financeiro-metric-label">Lucro</span>
-                                            <span className="financeiro-metric-value text-emerald-400">+28.5%</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
-                    </AnimateInView>
+                        <div className="financeiro-hero-visual">
+                            <div ref={cardRef} className="financeiro-floating-card financeiro-card-enhanced">
+
+                                {/* Efeito de partículas de fundo */}
+                                <div className="financeiro-particles-bg">
+                                    <div className="particle"></div>
+                                    <div className="particle"></div>
+                                    <div className="particle"></div>
+                                    <div className="particle"></div>
+                                    <div className="particle"></div>
+                                </div>
+
+                                {/* Gradiente animado de borda */}
+                                <div className="financeiro-card-border-glow"></div>
+
+                                <div className="financeiro-card-header">
+                                    <div className="financeiro-status-indicator"></div>
+                                    <span>Dashboard Financeiro</span>
+
+                                    {/* Mini indicadores adicionais */}
+                                    <div className="financeiro-mini-indicators">
+                                        <div className="mini-dot active"></div>
+                                        <div className="mini-dot"></div>
+                                        <div className="mini-dot"></div>
+                                    </div>
+                                </div>
+
+                                <div className="financeiro-chart-simulation">
+                                    <div className="financeiro-chart-bar" style={{ height: '60%' }}>
+                                        <div className="bar-glow"></div>
+                                        <div className="bar-tooltip">R$ 12.5k</div>
+                                    </div>
+                                    <div className="financeiro-chart-bar" style={{ height: '80%' }}>
+                                        <div className="bar-glow"></div>
+                                        <div className="bar-tooltip">R$ 18.2k</div>
+                                    </div>
+                                    <div className="financeiro-chart-bar" style={{ height: '45%' }}>
+                                        <div className="bar-glow"></div>
+                                        <div className="bar-tooltip">R$ 9.8k</div>
+                                    </div>
+                                    <div className="financeiro-chart-bar" style={{ height: '90%' }}>
+                                        <div className="bar-glow"></div>
+                                        <div className="bar-tooltip">R$ 22.1k</div>
+                                    </div>
+                                    <div className="financeiro-chart-bar" style={{ height: '70%' }}>
+                                        <div className="bar-glow"></div>
+                                        <div className="bar-tooltip">R$ 15.7k</div>
+                                    </div>
+                                </div>
+
+                                <div className="financeiro-metrics">
+                                    <div className="financeiro-metric">
+                                        <span className="financeiro-metric-label">
+                                            Faturamento
+                                            <div className="label-underline"></div>
+                                        </span>
+                                        <span className="financeiro-metric-value faturamento-valor">R$ 45.670</span>
+                                    </div>
+                                    <div className="financeiro-metric">
+                                        <span className="financeiro-metric-label">
+                                            Lucro
+                                            <div className="label-underline emerald"></div>
+                                        </span>
+                                        <span className="financeiro-metric-value text-emerald-400 lucro-valor">+28.5%</span>
+                                    </div>
+                                </div>
+
+                                {/* Efeito de reflexo */}
+                                <div className="financeiro-card-reflection"></div>
+
+                                {/* Efeitos de luz ambiente */}
+                                <div className="ambient-light top-left"></div>
+                                <div className="ambient-light bottom-right"></div>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* --- FEATURES GRID REDESIGNED --- */}
                     <AnimateInView delay={0.1}>
@@ -180,7 +526,7 @@ export default function FinanceiroPage() {
                                 <div className="financeiro-showcase-image">
                                     <div className="financeiro-image-frame">
                                         <Image
-                                            src="/images/gallery-relatorio.png"
+                                            src="/images/gallery-dashboard.png"
                                             alt="Tela de relatórios financeiros do GestorX"
                                             width={1200}
                                             height={675}
