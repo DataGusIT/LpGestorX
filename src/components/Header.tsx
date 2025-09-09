@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Link, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const menuVariants: Variants = {
@@ -41,7 +41,7 @@ export default function Header() {
                 className="site-header"
             >
                 <div className="header-container">
-                    <a href="#" className="header-logo">
+                    <Link href="#" className="header-logo">
                         <div className="header-logo-icon-wrapper">
                             <Image
                                 src="/images/Logo.png"
@@ -51,13 +51,13 @@ export default function Header() {
                             />
                         </div>
                         <h1 className="gradient-text-blue">GestorX</h1>
-                    </a>
+                    </Link>
 
                     <nav className="header-nav-desktop">
-                        <a href="#recursos">Recursos <span className="nav-link-underline"></span></a>
-                        <a href="#vantagens">Vantagens <span className="nav-link-underline"></span></a>
-                        <a href="#faq">Dúvida <span className="nav-link-underline"></span></a>
-                        <a href="#download">Download <span className="nav-link-underline"></span></a>
+                        <Link href="#recursos">Recursos <span className="nav-link-underline"></span></Link>
+                        <Link href="#vantagens">Vantagens <span className="nav-link-underline"></span></Link>
+                        <Link href="#faq">Dúvida <span className="nav-link-underline"></span></Link>
+                        <Link href="#download">Download <span className="nav-link-underline"></span></Link>
                     </nav>
 
                     {/* 
@@ -82,14 +82,14 @@ export default function Header() {
                     className="mobile-menu"
                 >
                     <div className="mobile-menu-content">
-                        <a href="#recursos">Recursos</a>
-                        <a href="#vantagens">Vantagens</a>
-                        <a href="#faq">Dúvida</a>
-                        <a href="#download">Download</a>
+                        <Link href="#recursos">Recursos</Link>
+                        <Link href="#vantagens">Vantagens</Link>
+                        <Link href="#faq">Dúvida</Link>
+                        <Link href="#download">Download</Link>
                         {/* 
                           AS DUAS LINHAS ABAIXO FORAM REMOVIDAS:
-                          <a href="#" style={{...}}>Login</a>
-                          <a href="#" className="btn-header-cta" style={{...}}>Começar Agora</a>
+                          <Link href="#" style={{...}}>Login</Link>
+                          <Link href="#" className="btn-header-cta" style={{...}}>Começar Agora</Link>
                         */}
                     </div>
                 </motion.div>

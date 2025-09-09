@@ -1,3 +1,5 @@
+import { Link } from "lucide-react";
+
 // app/termos/page.tsx
 export default function TermsOfUsePage() {
     return (
@@ -23,7 +25,7 @@ export default function TermsOfUsePage() {
                         <li>Distribuir cópias do Software original ou modificado.</li>
                     </ul>
                     <p>
-                        A única condição é que o aviso de direitos autorais e o texto da licença original sejam incluídos em todas as cópias ou partes substanciais do software. Você pode ler a licença completa <a href="#" target="_blank" rel="noopener noreferrer">aqui</a>.
+                        A única condição é que o aviso de direitos autorais e o texto da licença original sejam incluídos em todas as cópias ou partes substanciais do software. Você pode ler a licença completa <Link href="#" target="_blank">aqui</Link>.
                     </p>
 
                     <h2>2. Isenção de Garantia</h2>
@@ -51,7 +53,7 @@ export default function TermsOfUsePage() {
 
                     <h2>6. Contato</h2>
                     <p>
-                        Se você tiver alguma dúvida sobre estes Termos de Uso, entre em contato conosco através do nosso <a href="/#contato">formulário de contato</a>.
+                        Se você tiver alguma dúvida sobre estes Termos de Uso, entre em contato conosco através do nosso <Link href="/#contato">formulário de contato</Link>.
                     </p>
                 </div>
             </div>

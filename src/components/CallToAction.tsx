@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download, ArrowRight, Github, Users } from 'lucide-react';
+import { Download, ArrowRight, Github, Users, Link } from 'lucide-react';
 import AnimateInView from './AnimateInView';
 
 export default function CallToAction() {
@@ -40,15 +40,15 @@ export default function CallToAction() {
                     </div>
 
                     <div className="hero-buttons-container" style={{ marginBottom: '3rem' }}>
-                        <a href="#" className="btn btn-cta-primary">
+                        <Link href="#" className="btn btn-cta-primary">
                             <Download size={20} />
                             Download Gratuito
                             <ArrowRight size={18} />
-                        </a>
-                        <a href="#" className="btn btn-secondary">
+                        </Link>
+                        <Link href="#" className="btn btn-secondary">
                             <Github size={18} />
                             Ver Código Fonte
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="community-card">

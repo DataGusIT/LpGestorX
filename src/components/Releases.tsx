@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Rocket, Sparkles, Bug, ArrowRight, GitBranch } from 'lucide-react';
+import { Rocket, Sparkles, Bug, ArrowRight, GitBranch, Link } from 'lucide-react';
 import AnimateInView from './AnimateInView';
 
 // CONTEÚDO ATUALIZADO PARA O LANÇAMENTO INICIAL (v1.0)
@@ -81,10 +81,10 @@ export default function Releases() {
                         </div>
 
                         <div className="changelog-footer">
-                            <a href="#" className="changelog-footer-link">
+                            <Link href="#" className="changelog-footer-link">
                                 Ver todos os lançamentos
                                 <ArrowRight size={16} />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </AnimateInView>

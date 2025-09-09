@@ -90,10 +90,10 @@ export default function Features() {
                                     <div className="feature-card-badge"><span>{feature.stats}</span></div>
                                     <h3 className="feature-card-title">{feature.title}</h3>
                                     <p className="feature-card-description">{feature.description}</p>
-                                    <a href="/funcionalidades/financeiro" className="feature-card-link">
+                                    <Link href="/funcionalidades/financeiro" className="feature-card-link">
                                         Saiba mais
                                         <span>→</span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </motion.div>
                         </AnimateInView>

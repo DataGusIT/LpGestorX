@@ -1,7 +1,7 @@
 // app/components/Hero.tsx
 
 'use client';
-import { Download, /* outros ícones que você usa */ } from 'lucide-react';
+import { Download, Link, /* outros ícones que você usa */ } from 'lucide-react';
 
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
@@ -53,15 +53,15 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.7 }}
                     className="hero-buttons-container"
                 >
-                    <a href="#download" className="btn btn-primary">
+                    <Link href="#download" className="btn btn-primary">
                         <span>Baixar Agora</span>
                         <Download size={20} />
-                    </a>
+                    </Link>
 
-                    <a href="https://github.com/DataGusIT/EstacaoDoces" className="btn btn-secondary">
+                    <Link href="https://github.com/DataGusIT/EstacaoDoces" className="btn btn-secondary">
                         <Play size={18} />
                         <span>Ver no GitHub</span>
-                    </a>
+                    </Link>
                 </motion.div>
             </div>
         </section>

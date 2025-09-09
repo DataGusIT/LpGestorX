@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck } from 'lucide-react';
+import { Download as DownloadIcon, HardDrive, Cpu, Database, ShieldCheck, Link } from 'lucide-react';
 import AnimateInView from './AnimateInView';
 
 // Ícone do Windows (mantido como está)
@@ -47,10 +47,10 @@ export default function Download() {
                             {/* CONTEÚDO ATUALIZADO */}
                             <h3>GestorX para Windows</h3>
                             <p>Primeira versão estável, compatível com sistemas 64-bit.</p>
-                            <a href="#" className="btn-download">
+                            <Link href="#" className="btn-download">
                                 <DownloadIcon size={20} />
                                 Baixar Agora (v1.0)
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </AnimateInView>

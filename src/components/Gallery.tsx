@@ -1,19 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image'; // 1. Importado o componente Image do Next.js
 import { motion, AnimatePresence } from 'framer-motion';
-import { Image as ImageIcon, Maximize } from 'lucide-react';
+import { Image as ImageIcon } from 'lucide-react'; // Removido 'Maximize' que não estava sendo usado
 import AnimateInView from './AnimateInView';
 
 // Lista de imagens atualizada para refletir as telas reais do seu sistema.
 // Coloque seus screenshots na pasta `public/images/` e use os caminhos abaixo.
 const galleryImages = [
-    { src: 'images/gallery-dashboard.png', alt: 'Dashboard Principal do ERP' },
-    { src: 'images/gallery-pdv.png', alt: 'Tela de Análises de Business Intelligence' },
-    { src: 'images/gallery-estoque.png', alt: 'Tela de Relatórios Financeiros' },
-    { src: 'images/gallery-cliente.png', alt: 'Tela de Gestão de Estoque' },
-    { src: 'images/gallery-fornecedores.png', alt: 'Tela do Módulo de CRM' },
-    { src: 'images/gallery-promocoes.png', alt: 'Tela de Configurações do Sistema' },
+    { src: '/images/gallery-dashboard.png', alt: 'Dashboard Principal do ERP' },
+    { src: '/images/gallery-pdv.png', alt: 'Tela de Análises de Business Intelligence' },
+    { src: '/images/gallery-estoque.png', alt: 'Tela de Relatórios Financeiros' },
+    { src: '/images/gallery-cliente.png', alt: 'Tela de Gestão de Estoque' },
+    { src: '/images/gallery-fornecedores.png', alt: 'Tela do Módulo de CRM' },
+    { src: '/images/gallery-promocoes.png', alt: 'Tela de Configurações do Sistema' },
 ];
 
 export default function Gallery() {
@@ -39,16 +40,24 @@ export default function Gallery() {
                 <AnimateInView delay={0.2}>
                     <div className="gallery-main-image-wrapper">
                         <AnimatePresence mode="wait">
-                            <motion.img
+                            {/* 2. A animação agora envolve o componente <Image> */}
+                            <motion.div
                                 key={activeIndex}
-                                src={galleryImages[activeIndex].src}
-                                alt={galleryImages[activeIndex].alt}
-                                className="gallery-main-image"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                            />
+                            >
+                                <Image
+                                    src={galleryImages[activeIndex].src}
+                                    alt={galleryImages[activeIndex].alt}
+                                    width={1920} // <-- IMPORTANTE: Substitua pela largura real da sua imagem
+                                    height={1080} // <-- IMPORTANTE: Substitua pela altura real da sua imagem
+                                    sizes="(max-width: 1024px) 100vw, 80vw"
+                                    className="gallery-main-image"
+                                    priority // Ajuda a carregar a imagem principal mais rápido
+                                />
+                            </motion.div>
                         </AnimatePresence>
                     </div>
 
@@ -61,7 +70,15 @@ export default function Gallery() {
                                 whileHover={{ scale: 1.05 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <img src={image.src} alt={image.alt} className="thumbnail-image" />
+                                {/* 3. Tag <img> substituída pelo componente <Image> otimizado */}
+                                <Image
+                                    src={image.src}
+                                    alt={image.alt}
+                                    width={320} // <-- Use uma largura menor para as miniaturas
+                                    height={180} // <-- Use uma altura menor para as miniaturas
+                                    sizes="(max-width: 768px) 33vw, 15vw"
+                                    className="thumbnail-image"
+                                />
                             </motion.div>
                         ))}
                     </div>

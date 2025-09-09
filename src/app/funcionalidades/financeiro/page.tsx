@@ -1,6 +1,6 @@
 // app/funcionalidades/financeiro/page.tsx
 import Image from 'next/image';
-import { Download, Banknote, TrendingUp, Box, DollarSign, ArrowRight, CheckCircle, BarChart3, Zap } from 'lucide-react';
+import { Download, Banknote, TrendingUp, Box, DollarSign, ArrowRight, CheckCircle, BarChart3, Zap, Link } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
 
 const financialFeatures = [
@@ -201,11 +201,11 @@ export default function FinanceiroPage() {
                                 <p className="financeiro-cta-description">
                                     Baixe o GestorX e transforme a maneira como você gerencia seu negócio.
                                 </p>
-                                <a href="/#download" className="financeiro-cta-button">
+                                <Link href="/#download" className="financeiro-cta-button">
                                     <Download size={20} />
                                     <span>Ir para a Seção de Download</span>
                                     <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </AnimateInView>
