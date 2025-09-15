@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FinanceBackground from '@/components/FinanceBackground';
-import { Package, CheckCircle, ArrowRight, Layers, BarChart, FileText, Download } from 'lucide-react';
+import { Package, CheckCircle, ArrowRight, Layers, BarChart, FileText, Download, Zap } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
 
 const stockFeatures = [
@@ -51,135 +51,104 @@ const benefits = [
 ];
 
 export default function EstoquePage() {
-    const cardRef = useRef<HTMLDivElement | null>(null);
-    const particlesRef = useRef<HTMLDivElement>(null);
-    const waveEffectRef = useRef<HTMLDivElement>(null);
-    const alertBadgeRef = useRef<HTMLDivElement>(null);
+    // --- NOVA REF PARA A ANIMAÇÃO CRIATIVA ---
+    const visualRef = useRef<HTMLDivElement | null>(null);
 
-    // Função para criar partículas flutuantes
-    // Função para criar partículas flutuantes (CORRIGIDA)
-    const createParticles = (container: HTMLDivElement) => {
-        // Agora a função recebe o container como argumento, garantindo que ele não é nulo
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'floating-particle';
-            // Estilos para as partículas (você pode precisar criar a classe .floating-particle no seu CSS)
-            particle.style.position = 'absolute';
-            particle.style.width = '2px';
-            particle.style.height = '2px';
-            particle.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-            particle.style.borderRadius = '50%';
-
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-
-            container.appendChild(particle);
-
-            gsap.to(particle, {
-                y: gsap.utils.random(-100, 100),
-                x: gsap.utils.random(-50, 50),
-                opacity: 0,
-                duration: gsap.utils.random(3, 8),
-                repeat: -1,
-                yoyo: true,
-                ease: "power2.inOut",
-                delay: gsap.utils.random(0, 3)
-            });
-        }
-    };
-
-    // Substitua APENAS o useEffect em app/funcionalidades/estoque/page.tsx
-
-    // Substitua APENAS o useEffect em app/funcionalidades/estoque/page.tsx
-
+    // --- NOVO useEffect COM A ANIMAÇÃO CRIATIVA GSAP ---
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
+        const visualElement = visualRef.current;
+        if (!visualElement) return;
 
-        const cardElement = cardRef.current;
-        if (!cardElement) return;
+        // --- Seletores para os elementos da animação ---
+        const grid = visualElement.querySelector('.stock-grid-bg');
+        const boxes = gsap.utils.toArray<HTMLDivElement>(visualElement.querySelectorAll('.stock-item-box'));
+        const scanner = visualElement.querySelector('.scanner-beam');
+        const uiOverlay = visualElement.querySelector('.stock-ui-overlay');
+        const mappedItemsEl = visualElement.querySelector('.mapped-items-value');
+        const inventoryValueEl = visualElement.querySelector('.inventory-value');
 
-        // --- CORREÇÃO: Usando gsap.utils.toArray com contexto para todas as seleções ---
-        const header = gsap.utils.toArray(cardElement.querySelectorAll('.dashboard-header-animated'));
-        const metricCards = gsap.utils.toArray(cardElement.querySelectorAll('.metric-card-animated'));
-        const chartBars = gsap.utils.toArray(cardElement.querySelectorAll('.estoque-chart-bar'));
-        const inventoryItems = gsap.utils.toArray(cardElement.querySelectorAll('.inventory-item-animated'));
-        const alertBadge = gsap.utils.toArray(cardElement.querySelectorAll('.alert-badge-animated'));
+        // --- Estado Inicial dos Elementos (invisíveis) ---
+        gsap.set(visualElement, { autoAlpha: 0, scale: 0.9, y: 50 });
+        gsap.set(boxes, { autoAlpha: 0, z: () => gsap.utils.random(-400, -800), scale: 0 });
+        gsap.set(scanner, { xPercent: -110, skewX: -15 });
+        gsap.set(uiOverlay, { autoAlpha: 0 });
 
-        // Elementos dos contadores
-        const produtosAtivosEl = cardElement.querySelector('.produtos-ativos-valor');
-        const itensAlertaEl = cardElement.querySelector('.itens-alerta-valor');
-        const valorTotalEl = cardElement.querySelector('.valor-total-valor');
-        const movimentacoesEl = cardElement.querySelector('.movimentacoes-valor');
-
-        // --- Animação de Contadores (sem alterações aqui) ---
-        const values = { produtos: 0, alerta: 0, valorTotal: 0, movimentacoes: 0 };
-        const endValues = { produtos: 1247, alerta: 32, valorTotal: 89750, movimentacoes: 156 };
-
-        // --- TIMELINE PRINCIPAL ---
+        // --- Timeline Principal da Animação ---
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: cardElement,
-                start: "top 75%",
-                toggleActions: "play none none none"
-            },
-            defaults: { ease: "power3.out" }
+                trigger: visualElement,
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            }
         });
 
-        // A lógica da timeline permanece a mesma, pois agora as variáveis estão corretas
-        tl.from(cardElement, {
-            autoAlpha: 0,
-            y: 50,
-            scale: 0.95,
-            duration: 0.8
-        })
-            .from(header, {
-                autoAlpha: 0,
-                y: 20,
-                duration: 0.6
-            }, "-=0.5")
-            .from(metricCards, {
-                autoAlpha: 0,
-                y: 30,
-                scale: 0.9,
-                duration: 0.5,
-                stagger: 0.1
-            }, "-=0.4")
-            .from(chartBars, {
-                scaleY: 0,
-                transformOrigin: "bottom",
-                duration: 0.8,
-                stagger: 0.08
-            }, "-=0.5")
-            .from(alertBadge, {
-                autoAlpha: 0,
-                scale: 0.5,
-                duration: 0.5,
-                ease: "back.out(1.7)"
-            }, "-=0.6")
-            .to(values, {
-                produtos: endValues.produtos,
-                alerta: endValues.alerta,
-                valorTotal: endValues.valorTotal,
-                movimentacoes: endValues.movimentacoes,
-                duration: 2,
-                ease: "power2.out",
-                onUpdate: () => {
-                    if (produtosAtivosEl) produtosAtivosEl.textContent = Math.round(values.produtos).toLocaleString('pt-BR');
-                    if (itensAlertaEl) itensAlertaEl.textContent = Math.round(values.alerta).toLocaleString('pt-BR');
-                    if (valorTotalEl) valorTotalEl.textContent = `R$ ${Math.round(values.valorTotal).toLocaleString('pt-BR')}`;
-                    if (movimentacoesEl) movimentacoesEl.textContent = Math.round(values.movimentacoes).toLocaleString('pt-BR');
-                }
-            }, "<")
-            .from(inventoryItems, {
-                autoAlpha: 0,
-                y: 20,
-                duration: 0.4,
-                stagger: 0.05
-            }, "-=1.2");
+        // FASE 1: O container 3D aparece
+        tl.to(visualElement, {
+            autoAlpha: 1,
+            scale: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
 
-        // Cleanup
+        // FASE 2: A grade de "prateleiras" se materializa
+        tl.from(grid, { opacity: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5");
+
+        // FASE 3: As caixas (produtos) voam do fundo para suas posições
+        tl.to(boxes, {
+            autoAlpha: 1,
+            z: 0,
+            scale: 1,
+            duration: 1,
+            ease: 'back.out(1.4)',
+            stagger: { amount: 0.8, from: 'random' }
+        }, "-=1.2");
+
+        // FASE 4: O feixe do scanner varre os itens
+        tl.to(scanner, { xPercent: 110, duration: 1.2, ease: 'power3.inOut' }, "-=0.5");
+
+        // Efeito extra: As caixas piscam ao serem "escaneadas"
+        tl.to(boxes, {
+            backgroundColor: '#34d399', // Cor Esmeralda para destaque
+            duration: 0.05,
+            repeat: 1,
+            yoyo: true,
+            stagger: { amount: 0.7, from: 'start' }
+        }, "-=1.1");
+
+        // FASE 5: A interface com as métricas aparece e os números contam
+        tl.to(uiOverlay, { autoAlpha: 1, duration: 0.7 }, "-=0.5");
+
+        const counter = { items: 0, value: 0 };
+        tl.to(counter, {
+            items: 1247,
+            value: 89750,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => {
+                if (mappedItemsEl) mappedItemsEl.textContent = Math.round(counter.items).toLocaleString('pt-BR');
+                if (inventoryValueEl) inventoryValueEl.textContent = `R$ ${Math.round(counter.value).toLocaleString('pt-BR')}`;
+            }
+        }, "<");
+
+        // --- Animação Ambiente (Looping) ---
+        // Adiciona um movimento sutil de flutuação após a animação principal
+        gsap.to(visualElement, {
+            y: '+=10',
+            x: '-=5',
+            rotationZ: -1,
+            rotationY: 5,
+            duration: 8,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: 2
+        });
+
         return () => {
             tl.kill();
+            gsap.killTweensOf(visualElement); // Limpa a animação de flutuação
         };
 
     }, []);
@@ -188,9 +157,6 @@ export default function EstoquePage() {
         <main className="finance-page-main relative overflow-hidden">
             <FinanceBackground />
             <Header />
-
-            {/* Partículas flutuantes */}
-            <div ref={particlesRef} className="floating-particles-container"></div>
 
             <section className="financeiro-page-section relative">
                 <div className="container">
@@ -219,131 +185,38 @@ export default function EstoquePage() {
                             </div>
                         </div>
 
+                        {/* --- NOVA ESTRUTURA JSX PARA A ANIMAÇÃO CRIATIVA --- */}
                         <div className="financeiro-hero-visual">
-                            {/* Card principal com todas as animações */}
-                            <div
-                                ref={cardRef}
-                                className="financeiro-floating-card advanced-stock-card"
-                                style={{ opacity: 0, visibility: 'hidden' }}
-                            >
-                                {/* Efeito de onda */}
-                                <div ref={waveEffectRef} className="wave-effect"></div>
+                            <div ref={visualRef} className="stock-hero-visual">
+                                {/* Grade de Fundo (Prateleiras) */}
+                                <div className="stock-grid-bg"></div>
 
-                                {/* Badge de alerta */}
-                                <div ref={alertBadgeRef} className="alert-badge-animated">
-                                    🚨 32 Itens em Estoque Baixo
-                                </div>
+                                {/* Itens de Produto (Caixas) */}
+                                {Array.from({ length: 18 }).map((_, i) => (
+                                    <div key={i} className="stock-item-box">
+                                        <div className="stock-item-glow"></div>
+                                    </div>
+                                ))}
 
-                                {/* Header do card */}
-                                <div className="financeiro-card-header dashboard-header-animated">
-                                    <div className="financeiro-status-indicator status-pulse"></div>
-                                    <span>Inventário em Tempo Real</span>
-                                </div>
+                                {/* Feixe do Scanner */}
+                                <div className="scanner-beam"></div>
 
-                                {/* Grid de métricas expandida */}
-                                <div className="metrics-grid-expanded">
-                                    <div className="metric-card-animated">
-                                        <div className="financeiro-metric-value produtos-ativos-valor">1.247</div>
-                                        <div className="financeiro-metric-label">Produtos Ativos</div>
-                                        <div className="progress-bar-container">
-                                            <div className="progress-fill progress-blue"></div>
-                                        </div>
+                                {/* Overlay com a UI de Métricas */}
+                                <div className="stock-ui-overlay">
+                                    <div className="ui-metric">
+                                        <span className="ui-metric-label">Itens Mapeados</span>
+                                        <span className="ui-metric-value mapped-items-value">0</span>
                                     </div>
-                                    <div className="metric-card-animated">
-                                        <div className="financeiro-metric-value text-amber-400 itens-alerta-valor">32</div>
-                                        <div className="financeiro-metric-label">Estoque Baixo</div>
-                                        <div className="progress-bar-container">
-                                            <div className="progress-fill progress-amber"></div>
-                                        </div>
-                                    </div>
-                                    <div className="metric-card-animated">
-                                        <div className="financeiro-metric-value text-emerald-400 valor-total-valor">R$ 89.750</div>
-                                        <div className="financeiro-metric-label">Valor Total</div>
-                                        <div className="progress-bar-container">
-                                            <div className="progress-fill progress-emerald"></div>
-                                        </div>
-                                    </div>
-                                    <div className="metric-card-animated">
-                                        <div className="financeiro-metric-value text-purple-400 movimentacoes-valor">156</div>
-                                        <div className="financeiro-metric-label">Movimentações Hoje</div>
-                                        <div className="progress-bar-container">
-                                            <div className="progress-fill progress-purple"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Gráfico melhorado */}
-                                <div className="financeiro-chart-simulation enhanced-chart">
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '75%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '45%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '90%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '60%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '85%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                    <div className="estoque-chart-bar-wrapper">
-                                        <div className="estoque-chart-bar" style={{ height: '35%' }}>
-                                            <div className="chart-bar-glow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Grid de inventário */}
-                                <div className="inventory-grid-container">
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">📦</div>
-                                        <div className="inventory-name">Eletrônicos</div>
-                                        <div className="inventory-stock">245 itens</div>
-                                    </div>
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">👕</div>
-                                        <div className="inventory-name">Roupas</div>
-                                        <div className="inventory-stock">189 itens</div>
-                                    </div>
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">🏠</div>
-                                        <div className="inventory-name">Casa</div>
-                                        <div className="inventory-stock">96 itens</div>
-                                    </div>
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">🎮</div>
-                                        <div className="inventory-name">Games</div>
-                                        <div className="inventory-stock">78 itens</div>
-                                    </div>
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">📚</div>
-                                        <div className="inventory-name">Livros</div>
-                                        <div className="inventory-stock">156 itens</div>
-                                    </div>
-                                    <div className="inventory-item-animated">
-                                        <div className="inventory-icon">🍃</div>
-                                        <div className="inventory-name">Orgânicos</div>
-                                        <div className="inventory-stock">67 itens</div>
+                                    <div className="ui-metric">
+                                        <span className="ui-metric-label">Valor do Inventário</span>
+                                        <span className="ui-metric-value inventory-value">R$ 0</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* --- FEATURES GRID --- */}
+                    {/* --- FEATURES GRID (sem alterações) --- */}
                     <AnimateInView delay={0.1}>
                         <div className="financeiro-features-section">
                             <div className="financeiro-section-header">
@@ -372,28 +245,50 @@ export default function EstoquePage() {
                         </div>
                     </AnimateInView>
 
-                    {/* --- FINAL CTA --- */}
-                    <AnimateInView delay={0.5}>
-                        <div className="financeiro-final-cta-modern">
-                            <div className="financeiro-cta-background">
-                                <div className="financeiro-cta-grid"></div>
-                            </div>
-                            <div className="financeiro-cta-content">
-                                <h2 className="financeiro-cta-title">
-                                    Pronto para <span className="financeiro-gradient-text">organizar</span> seu negócio?
-                                </h2>
-                                <p className="financeiro-cta-description">
-                                    Baixe o GestorX e tenha um controle de estoque que realmente funciona.
-                                </p>
-                                <Link href="/#download" className="financeiro-cta-button group">
-                                    <Download size={20} />
-                                    <span>Ir para a Seção de Download</span>
-                                    <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                                </Link>
+                    {/* --- SHOWCASE SECTION (sem alterações) --- */}
+                    <AnimateInView delay={0.4}>
+                        <div className="financeiro-showcase-section">
+                            <div className="financeiro-showcase-content">
+                                <div className="financeiro-showcase-text">
+                                    <div className="financeiro-showcase-badge">
+                                        <Zap size={16} />
+                                        <span>Análise de Inventário</span>
+                                    </div>
+                                    <h2 className="financeiro-showcase-title">
+                                        Dados <span className="financeiro-gradient-text">Estratégicos</span> ao seu Alcance
+                                    </h2>
+                                    <p className="financeiro-showcase-description">
+                                        Identifique seus produtos mais rentáveis com a Curva ABC, analise o giro de estoque para otimizar compras e evite perdas com alertas de validade e estoque baixo.
+                                    </p>
+                                    <div className="financeiro-showcase-stats">
+                                        <div className="financeiro-stat-item"><span className="financeiro-stat-number">99.8%</span><span className="financeiro-stat-label">Acuracidade</span></div>
+                                        <div className="financeiro-stat-item"><span className="financeiro-stat-number">Real-time</span><span className="financeiro-stat-label">Sincronização</span></div>
+                                        <div className="financeiro-stat-item"><span className="financeiro-stat-number">+25%</span><span className="financeiro-stat-label">Otimização</span></div>
+                                    </div>
+                                </div>
+                                <div className="financeiro-showcase-image">
+                                    <div className="financeiro-image-frame">
+                                        <Image src="/images/gallery-inventory.png" alt="Tela de relatórios de estoque do GestorX" width={1200} height={675} style={{ width: '100%', height: 'auto' }} />
+                                        <div className="financeiro-image-overlay"><div className="financeiro-overlay-gradient"></div></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </AnimateInView>
 
+                    {/* --- FINAL CTA (sem alterações) --- */}
+                    <AnimateInView delay={0.5}>
+                        <div className="financeiro-final-cta-modern">
+                            <div className="financeiro-cta-background"><div className="financeiro-cta-grid"></div></div>
+                            <div className="financeiro-cta-content">
+                                <h2 className="financeiro-cta-title">Pronto para <span className="financeiro-gradient-text">organizar</span> seu negócio?</h2>
+                                <p className="financeiro-cta-description">Baixe o GestorX e tenha um controle de estoque que realmente funciona.</p>
+                                <Link href="/#download" className="financeiro-cta-button group">
+                                    <Download size={20} /><span>Ir para a Seção de Download</span><ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                            </div>
+                        </div>
+                    </AnimateInView>
                 </div>
             </section>
 

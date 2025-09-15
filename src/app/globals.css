@@ -3456,450 +3456,543 @@ m .hero-title .gradient-text-white {
   }
 }
 
-/* ==========================================================================
-   Animação de Barras de Estoque - ESPECÍFICO PARA PÁGINA FINANCEIRO
-   ========================================================================== */
-/* ==========================================================================
-   Animações de Estoque Avançadas - ESPECÍFICO PARA PÁGINA DE ESTOQUE
-   ========================================================================== */
+/* === ESTILOS PARA A NOVA ANIMAÇÃO CRIATIVA DE ESTOQUE === */
 
-/* Container para partículas flutuantes */
-.floating-particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-/* Partículas individuais */
-.floating-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(96, 165, 250, 0.6);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Card de estoque avançado */
-.advanced-stock-card {
+.stock-hero-visual {
   position: relative;
-  overflow: hidden;
-  background: rgba(15, 15, 35, 0.95) !important;
-  border: 1px solid rgba(96, 165, 250, 0.2) !important;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(96, 165, 250, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px);
-}
-
-/* Efeito de onda */
-.wave-effect {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Badge de alerta animado */
-.alert-badge-animated {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  opacity: 0;
-  transform: scale(0);
-  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
-  z-index: 10;
-}
-
-/* Status indicator com pulse */
-.status-pulse {
-  animation: pulse-glow 2s infinite;
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 5px #10b981;
-  }
-
-  50% {
-    opacity: 0.5;
-    box-shadow: 0 0 20px #10b981;
-  }
-}
-
-/* Grid de métricas expandida */
-.metrics-grid-expanded {
+  min-height: 400px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.metric-card-animated {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
   padding: 1rem;
-  text-align: center;
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+
+  /* Ativa o contexto 3D para os elementos filhos */
+  perspective: 1500px;
+  transform-style: preserve-3d;
 }
 
-.metric-card-animated::before {
-  content: '';
+.stock-grid-bg {
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #34d399, transparent);
-  animation: shimmer 3s infinite;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(107, 114, 128, 0.1) 1px, transparent 1px),
+    linear-gradient(to right, rgba(107, 114, 128, 0.1) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  transform: rotateX(75deg);
+  /* Gira a grade para dar profundidade */
+  opacity: 0.5;
+  z-index: 1;
 }
 
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-
-  100% {
-    left: 100%;
-  }
-}
-
-.metric-card-animated:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.2);
-  border-color: rgba(96, 165, 250, 0.3);
-}
-
-/* Barras de progresso */
-.progress-bar-container {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  margin-top: 0.5rem;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  border-radius: 2px;
-  transform: translateX(-100%);
-}
-
-.progress-blue {
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
-}
-
-.progress-amber {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
-}
-
-.progress-emerald {
-  background: linear-gradient(90deg, #10b981, #34d399);
-}
-
-.progress-purple {
-  background: linear-gradient(90deg, #8b5cf6, #a855f7);
-}
-
-/* Gráfico melhorado */
-.enhanced-chart {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.stock-item-box {
   position: relative;
+  background-color: rgba(30, 41, 59, 0.8);
+  /* slate-800 com transparência */
+  border-radius: 0.375rem;
+  /* rounded-md */
+  border: 1px solid rgba(55, 65, 81, 0.5);
+  /* gray-700 com transparência */
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition: background-color 0.3s;
 }
 
-/* Wrapper para a animação das barras de estoque */
-.estoque-chart-bar-wrapper {
-  flex: 1;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 6px 6px 0 0;
-  position: relative;
+.stock-item-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-/* Barras do gráfico melhoradas */
-.estoque-chart-bar {
-  background: linear-gradient(to top, #1e40af, #3b82f6, #60a5fa);
-  border-radius: 6px 6px 0 0;
-  width: 100%;
-  position: relative;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+.stock-hero-visual:hover .stock-item-glow {
+  opacity: 1;
 }
 
-.estoque-chart-bar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
-}
-
-/* Efeito de brilho nas barras */
-.chart-bar-glow {
+.scanner-beam {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(96, 165, 250, 0.8));
-  border-radius: 6px 6px 0 0;
-  opacity: 0;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.7), transparent);
+  box-shadow: 0 0 30px 10px rgba(52, 211, 153, 0.5);
+  z-index: 5;
+  pointer-events: none;
 }
 
-/* Grid de inventário */
-.inventory-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-.inventory-item-animated {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 0.75rem;
-  text-align: center;
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.inventory-item-animated::before {
-  content: '';
+.stock-ui-overlay {
   position: absolute;
-  top: 0;
-  left: -100%;
+  bottom: 1.5rem;
+  /* 24px */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 1rem 1.5rem;
+  background-color: rgba(17, 24, 39, 0.7);
+  /* gray-900 com transparência */
+  backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
+  /* rounded-lg */
+  border: 1px solid rgba(55, 65, 81, 1);
+  /* gray-700 */
+  display: flex;
+  gap: 2rem;
+  text-align: center;
+}
+
+.ui-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.ui-metric-label {
+  font-size: 0.875rem;
+  /* text-sm */
+  color: #9ca3af;
+  /* text-gray-400 */
+}
+
+.ui-metric-value {
+  font-size: 1.5rem;
+  /* text-2xl */
+  font-weight: 700;
+  color: #e5e7eb;
+  /* text-gray-200 */
+  letter-spacing: -0.025em;
+}
+
+
+/* === ESTILOS PARA A NOVA ANIMAÇÃO CRIATIVA DE CRM === */
+
+.crm-hero-visual {
+  position: relative;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #34d399, transparent);
-  animation: shimmer-slow 4s infinite;
-}
-
-@keyframes shimmer-slow {
-  0% {
-    left: -100%;
-  }
-
-  100% {
-    left: 100%;
-  }
-}
-
-.inventory-item-animated:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(52, 211, 153, 0.2);
-  border-color: rgba(52, 211, 153, 0.3);
-}
-
-.inventory-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
-  border-radius: 6px;
-  margin: 0 auto 0.5rem;
+  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  transition: all 0.3s ease;
 }
 
-.inventory-item-animated:hover .inventory-icon {
-  transform: rotate(5deg) scale(1.1);
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+.crm-network-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  z-index: 1;
 }
 
-.inventory-name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: rgba(255, 255, 255, 0.9);
+.network-line {
+  stroke-width: 1.5;
+  stroke: rgba(107, 114, 128, 0.5);
+  /* gray-500 com transparência */
+  fill: none;
 }
 
-.inventory-stock {
-  font-size: 0.65rem;
-  opacity: 0.7;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-/* Animações específicas para métricas */
-.financeiro-metric-value {
-  font-size: 1.5rem !important;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #60a5fa, #34d399);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transition: all 0.3s ease;
-}
-
-.metric-card-animated:hover .financeiro-metric-value {
-  transform: scale(1.05);
-}
-
-.financeiro-metric-label {
-  font-size: 0.75rem !important;
-  opacity: 0.7;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-/* Melhorias no header do dashboard */
-.dashboard-header-animated {
-  position: relative;
+.network-node {
+  position: absolute;
+  border-radius: 9999px;
+  /* rounded-full */
   z-index: 2;
+  transform-style: preserve-3d;
+  /* Para movimento mais suave */
 }
 
-.dashboard-header-animated span {
-  background: linear-gradient(135deg, #60a5fa, #34d399);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 600;
-  font-size: 0.9rem;
+.node-center {
+  width: 48px;
+  height: 48px;
+  background-color: #4f46e5;
+  /* indigo-600 */
+  box-shadow: 0 0 25px 5px rgba(79, 70, 229, 0.6);
 }
 
-/* Efeitos de hover globais para o card */
-.advanced-stock-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(96, 165, 250, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+.node-client {
+  width: 24px;
+  height: 24px;
+  background-color: #10b981;
+  /* emerald-500 */
+  box-shadow: 0 0 15px 3px rgba(16, 185, 129, 0.5);
 }
 
-/* Animação de respiração para elementos importantes */
-@keyframes breathe {
+.node-supplier {
+  width: 32px;
+  height: 32px;
+  background-color: #8b5cf6;
+  /* violet-500 */
+  box-shadow: 0 0 20px 4px rgba(139, 92, 246, 0.5);
+}
+
+.crm-ui-overlay {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  padding: 1rem 1.5rem;
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(55, 65, 81);
+  display: flex;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* === ESTILOS PARA A NOVA ANIMAÇÃO CRIATIVA DE DASHBOARD === */
+
+.dashboard-hero-visual {
+  position: relative;
+  width: 100%;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-streams-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  z-index: 1;
+  overflow: visible;
+}
+
+.data-stream-path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Cores dos fluxos para representar cada módulo */
+.stream-emerald {
+  stroke: #34d399;
+  filter: drop-shadow(0 0 5px #34d399);
+}
+
+.stream-blue {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 5px #60a5fa);
+}
+
+.stream-purple {
+  stroke: #a78bfa;
+  filter: drop-shadow(0 0 5px #a78bfa);
+}
+
+.stream-amber {
+  stroke: #fcd34d;
+  filter: drop-shadow(0 0 5px #fcd34d);
+}
+
+.data-core {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #a78bfa, #4f46e5);
+  box-shadow: 0 0 30px 10px rgba(139, 92, 246, 0.5);
+  z-index: 5;
+  animation: pulse-core 4s infinite ease-in-out;
+}
+
+@keyframes pulse-core {
 
   0%,
   100% {
     transform: scale(1);
-    opacity: 1;
+    box-shadow: 0 0 30px 10px rgba(139, 92, 246, 0.5);
   }
 
   50% {
-    transform: scale(1.02);
-    opacity: 0.9;
+    transform: scale(1.1);
+    box-shadow: 0 0 40px 15px rgba(139, 92, 246, 0.7);
   }
 }
 
-.alert-badge-animated {
-  animation: breathe 3s infinite ease-in-out;
+.dash-widget {
+  position: absolute;
+  padding: 1rem;
+  background-color: rgba(30, 41, 59, 0.8);
+  /* slate-800 com transparência */
+  backdrop-filter: blur(8px);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(55, 65, 81, 1);
+  /* gray-700 */
+  z-index: 10;
+  min-width: 180px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .metrics-grid-expanded {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-
-  .inventory-grid-container {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-  }
-
-  .advanced-stock-card {
-    padding: 1.5rem !important;
-  }
-
-  .alert-badge-animated {
-    position: relative;
-    top: auto;
-    right: auto;
-    margin-bottom: 1rem;
-    align-self: flex-start;
-  }
-
-  .floating-particles-container {
-    display: none;
-    /* Hide particles on mobile for performance */
-  }
+.widget-content {
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 480px) {
-  .metrics-grid-expanded {
-    grid-template-columns: 1fr;
-  }
-
-  .inventory-grid-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .financeiro-metric-value {
-    font-size: 1.25rem !important;
-  }
-
-  .inventory-icon {
-    width: 28px;
-    height: 28px;
-    font-size: 0.9rem;
-  }
+.widget-label {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  /* text-gray-400 */
 }
 
-/* Dark theme enhancements */
-@media (prefers-color-scheme: dark) {
-  .advanced-stock-card {
-    background: rgba(10, 10, 25, 0.98) !important;
-    border-color: rgba(96, 165, 250, 0.15) !important;
-  }
-
-  .metric-card-animated {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .inventory-item-animated {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
+.widget-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  /* text-gray-200 */
 }
 
-/* Loading states for better UX */
-.financeiro-floating-card[style*="opacity: 0"] {
-  pointer-events: none;
+/* Posicionamento dos widgets (ajuste conforme necessário) */
+#widget-revenue {
+  top: 10%;
+  left: 0;
 }
 
-.financeiro-floating-card[style*="visibility: hidden"] {
-  pointer-events: none;
+#widget-sales {
+  top: 10%;
+  right: 0;
 }
 
-/* Performance optimizations */
-.estoque-chart-bar,
-.metric-card-animated,
-.inventory-item-animated {
-  will-change: transform, opacity;
+#widget-stock {
+  bottom: 10%;
+  left: 0;
 }
 
-.floating-particle {
-  will-change: transform, opacity;
+#widget-clients {
+  bottom: 10%;
+  right: 0;
+}
+
+/* === ESTILOS PARA A NOVA ANIMAÇÃO CRIATIVA DE PROMOÇÕES === */
+
+.promo-hero-visual {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Esconde as partículas antes de entrarem */
+}
+
+.promo-tag-visual {
+  --glow-opacity: 0;
+  position: relative;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, #34d399, #10b981);
+  /* Gradiente Esmeralda */
+  color: white;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 0 40px 15px rgba(16, 185, 129, var(--glow-opacity));
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.promo-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #fcd34d;
+  /* Cor Âmbar para as partículas */
+  border-radius: 9999px;
+  box-shadow: 0 0 10px 2px rgba(252, 211, 77, 0.7);
+  z-index: 5;
+}
+
+.promo-ui-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  /* 24px */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  padding: 1rem 1.5rem;
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(55, 65, 81);
+  display: flex;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* Reutilizando as classes de UI dos exemplos anteriores */
+.ui-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.ui-metric-label {
+  font-size: 0.875rem;
+  /* text-sm */
+  color: #9ca3af;
+  /* text-gray-400 */
+}
+
+.ui-metric-value {
+  font-size: 1.5rem;
+  /* text-2xl */
+  font-weight: 700;
+  color: #e5e7eb;
+  /* text-gray-200 */
+  letter-spacing: -0.025em;
+}
+
+/* === ESTILOS PARA A NOVA ANIMAÇÃO CRIATIVA DE CONTROLE DE USUÁRIOS === */
+
+.security-hero-visual {
+  position: relative;
+  width: 100%;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.security-core {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #60a5fa, #3b82f6);
+  /* Gradiente Azul */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 0 30px 10px rgba(96, 165, 250, 0.5);
+}
+
+.scanner-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 2px solid #60a5fa;
+  /* Azul */
+  z-index: 5;
+}
+
+.scanner-ring.ring-1 {
+  width: 200px;
+  height: 200px;
+}
+
+.scanner-ring.ring-2 {
+  width: 300px;
+  height: 300px;
+}
+
+.scanner-ring.ring-3 {
+  width: 400px;
+  height: 400px;
+}
+
+.user-id-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(55, 65, 81);
+  z-index: 15;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background-size: cover;
+}
+
+/* Placeholders de avatar */
+.ua-1 {
+  background-color: #a78bfa;
+}
+
+/* Roxo */
+.ua-2 {
+  background-color: #34d399;
+}
+
+/* Verde */
+.ua-3 {
+  background-color: #fcd34d;
+}
+
+/* Amarelo */
+.ua-4 {
+  background-color: #f87171;
+}
+
+/* Vermelho */
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  color: #e5e7eb;
+}
+
+.user-info strong {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.user-info span {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Posicionamento dos cards */
+.card-admin {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-manager {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-seller {
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-stock {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.users-ui-overlay {
+  position: absolute;
+  bottom: 0;
+  z-index: 20;
+  padding: 1rem 1.5rem;
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(55, 65, 81);
+  display: flex;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* Reutilizando as classes de UI dos exemplos anteriores */
+.ui-metric,
+.ui-metric-label,
+.ui-metric-value {
+  /* Estilos já definidos nos CSS anteriores */
 }
