@@ -526,7 +526,7 @@ export default function FinanceiroPage() {
                                 <div className="financeiro-showcase-image">
                                     <div className="financeiro-image-frame">
                                         <Image
-                                            src="/images/gallery-dashboard.png"
+                                            src="/images/gallery-pdv.png"
                                             alt="Tela de relatórios financeiros do GestorX"
                                             width={1200}
                                             height={675}

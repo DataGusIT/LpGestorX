@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react'; // Adicionado useState para o carrossel
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from 'next/image';
@@ -8,59 +8,103 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FinanceBackground from '@/components/FinanceBackground';
-import { Users, CheckCircle, ArrowRight, Truck, History, FileText, Download, Zap } from 'lucide-react';
+// Ícones atualizados para o carrossel e novas features
+import { Users, CheckCircle, ArrowRight, Truck, History, FileText, Download, Zap, ChevronLeft, ChevronRight, UploadCloud } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
 
-// Conteúdo focado em Clientes e Fornecedores (CRM)
+// --- CONTEÚDO ATUALIZADO ---
+// O conteúdo agora reflete as funcionalidades exatas do seu sistema PyQt5.
 const crmFeatures = [
     {
         icon: <Users className="text-blue-400" />,
-        title: "Cadastro Unificado",
-        description: "Centralize todas as informações de clientes e fornecedores. Acesse contatos, histórico de compras, e condições comerciais em um único lugar.",
-        highlight: "Visão 360°",
+        title: "Cadastro Unificado de Clientes",
+        description: "Centralize dados essenciais dos seus clientes, incluindo nome, data de nascimento, contato, e-mail e endereço. Tenha tudo à mão para um atendimento ágil.",
+        highlight: "Visão 360° do Cliente",
         gradient: "from-blue-500/10 to-cyan-500/5"
     },
     {
         icon: <Truck className="text-purple-400" />,
-        title: "Gestão de Fornecedores",
-        description: "Organize seus parceiros, cadastre tabelas de preços, controle prazos de entrega e gerencie pedidos de compra de forma integrada ao estoque.",
+        title: "Gestão Estratégica de Fornecedores",
+        description: "Organize seus parceiros por empresa, representante e classifique-os por frequência de compra (Alta, Média, Baixa) para otimizar suas negociações.",
         highlight: "Parcerias Fortes",
         gradient: "from-purple-500/10 to-indigo-500/5"
     },
     {
         icon: <History className="text-amber-400" />,
-        title: "Histórico de Relacionamento",
-        description: "Cada interação, venda ou negociação é registrada. Crie um atendimento personalizado e antecipe as necessidades dos seus clientes.",
-        highlight: "Atendimento Premium",
+        title: "Histórico e Acompanhamento",
+        description: "Acesse rapidamente o histórico de relacionamento. Para clientes, veja seus dados de cadastro, e para fornecedores, monitore a frequência de compras.",
+        highlight: "Relacionamento Duradouro",
         gradient: "from-amber-500/10 to-yellow-500/5"
     },
     {
-        icon: <FileText className="text-emerald-400" />,
-        title: "Relatórios de CRM",
-        description: "Entenda quem são seus melhores clientes, a frequência de compra e o desempenho dos seus fornecedores para tomar decisões estratégicas.",
-        highlight: "Inteligência de Negócio",
+        icon: <UploadCloud className="text-emerald-400" />,
+        title: "Importação e Exportação CSV",
+        description: "Migre seus dados existentes com facilidade ou extraia relatórios completos. A importação inteligente atualiza registros existentes e adiciona novos.",
+        highlight: "Flexibilidade Total",
         gradient: "from-emerald-500/10 to-green-500/5"
     }
 ];
 
 const benefits = [
-    "Fidelização de clientes",
+    "Centralização de dados",
     "Negociações otimizadas",
-    "Comunicação centralizada",
-    "Visão completa do funil"
+    "Comunicação direcionada",
+    "Gestão de dados flexível"
 ];
 
+// --- DADOS PARA O NOVO CARROSSEL ---
+const showcaseSlides = [
+    {
+        badgeIcon: <Users size={16} />,
+        badgeText: "Segmentação Avançada",
+        title: "Conheça seu Público a Fundo",
+        gradientText: "a Fundo",
+        description: "Utilize a busca avançada para filtrar clientes por nome, telefone ou e-mail. Segmente sua base para criar campanhas e ações de marketing direcionadas.",
+        stats: [
+            { number: "Rápida", label: "Busca" },
+            { number: "1-to-1", label: "Comunicação" },
+            { number: "Targeted", label: "Marketing" }
+        ],
+        imageSrc: "/images/gallery-cliente.png",
+        imageAlt: "Tela de gestão de clientes do GestorX"
+    },
+    {
+        badgeIcon: <Zap size={16} />,
+        badgeText: "Gestão Inteligente de Compras",
+        title: "Notifique Fornecedores com ",
+        gradientText: "um Clique",
+        description: "O sistema identifica produtos com estoque baixo e prepara uma lista para notificar seus fornecedores via e-mail, agilizando o processo de reposição.",
+        stats: [
+            { number: "Auto", label: "Identificação" },
+            { number: "+Eficiência", label: "em Compras" },
+            { number: "-Ruptura", label: "de Estoque" }
+        ],
+        imageSrc: "/images/gallery-fornecedores.png", // Imagem para fornecedores
+        imageAlt: "Tela de gestão de fornecedores do GestorX"
+    }
+];
+
+
 export default function ClientesFornecedoresPage() {
-    // --- REF PARA A NOVA ANIMAÇÃO CRIATIVA ---
     const visualRef = useRef<HTMLDivElement | null>(null);
 
-    // --- NOVO useEffect COM A ANIMAÇÃO GSAP CRIATIVA ---
+    // --- LÓGICA PARA O CARROSSEL ---
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev === showcaseSlides.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev === 0 ? showcaseSlides.length - 1 : prev - 1));
+    };
+
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
         const visualElement = visualRef.current;
         if (!visualElement) return;
 
-        // --- Seletores para os elementos da animação de rede ---
         const centerNode = visualElement.querySelector('.node-center');
         const clientNodes = gsap.utils.toArray<HTMLDivElement>('.node-client');
         const supplierNodes = gsap.utils.toArray<HTMLDivElement>('.node-supplier');
@@ -70,13 +114,11 @@ export default function ClientesFornecedoresPage() {
         const clientsEl = visualElement.querySelector('.connected-clients-value');
         const partnersEl = visualElement.querySelector('.active-partners-value');
 
-        // --- Estado Inicial ---
         gsap.set(visualElement, { autoAlpha: 0 });
         gsap.set(allNodes, { autoAlpha: 0, scale: 0, transformOrigin: 'center center' });
         gsap.set(lines, { autoAlpha: 0, strokeDasharray: 200, strokeDashoffset: 200 });
         gsap.set(uiOverlay, { autoAlpha: 0 });
 
-        // --- Timeline Principal ---
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: visualElement,
@@ -85,13 +127,8 @@ export default function ClientesFornecedoresPage() {
             }
         });
 
-        // FASE 1: O container aparece
         tl.to(visualElement, { autoAlpha: 1, duration: 0.5 });
-
-        // FASE 2: O nó central pulsa e aparece
         tl.to(centerNode, { scale: 1, autoAlpha: 1, duration: 0.8, ease: 'back.out(1.7)' });
-
-        // FASE 3: As linhas se desenham a partir do centro
         tl.to(lines, {
             strokeDashoffset: 0,
             autoAlpha: 1,
@@ -99,8 +136,6 @@ export default function ClientesFornecedoresPage() {
             ease: 'power2.inOut',
             stagger: 0.1
         }, "-=0.5");
-
-        // FASE 4: Os nós de clientes e fornecedores aparecem nas pontas das linhas
         tl.to([...clientNodes, ...supplierNodes], {
             scale: 1,
             autoAlpha: 1,
@@ -108,8 +143,6 @@ export default function ClientesFornecedoresPage() {
             ease: 'back.out(1.7)',
             stagger: 0.1
         }, "-=0.8");
-
-        // FASE 5: A interface com os contadores aparece
         tl.to(uiOverlay, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.5");
 
         const counter = { clients: 0, partners: 0 };
@@ -124,7 +157,6 @@ export default function ClientesFornecedoresPage() {
             }
         }, "<");
 
-        // --- Animação de Fundo (Looping) ---
         allNodes.forEach(node => {
             gsap.to(node, {
                 y: () => gsap.utils.random(-10, 10),
@@ -137,7 +169,7 @@ export default function ClientesFornecedoresPage() {
         });
 
         return () => {
-            gsap.killTweensOf(allNodes); // Limpa todas as animações
+            gsap.killTweensOf(allNodes);
             tl.kill();
         };
     }, []);
@@ -150,7 +182,7 @@ export default function ClientesFornecedoresPage() {
             <section className="financeiro-page-section relative">
                 <div className="container">
 
-                    {/* --- HERO SECTION --- */}
+                    {/* --- HERO SECTION (Conteúdo ajustado) --- */}
                     <div className="financeiro-hero-modern">
                         <div className="financeiro-hero-content">
                             <div className="financeiro-hero-badge">
@@ -162,7 +194,7 @@ export default function ClientesFornecedoresPage() {
                                 <span className="financeiro-gradient-text"> Impulsionam</span>
                             </h1>
                             <p className="financeiro-hero-description">
-                                Conecte-se de verdade com seus clientes e otimize parcerias com fornecedores. Gestão completa para quem move o seu negócio.
+                                Conecte-se com seus clientes e otimize parcerias com fornecedores. Gestão completa para quem move o seu negócio, com cadastros centralizados e ferramentas flexíveis.
                             </p>
                             <div className="financeiro-hero-benefits">
                                 {benefits.map((benefit, index) => (
@@ -174,10 +206,8 @@ export default function ClientesFornecedoresPage() {
                             </div>
                         </div>
 
-                        {/* --- NOVA ESTRUTURA JSX PARA A ANIMAÇÃO CRIATIVA DE REDE --- */}
                         <div className="financeiro-hero-visual">
                             <div ref={visualRef} className="crm-hero-visual">
-                                {/* SVG para desenhar as linhas de conexão */}
                                 <svg className="crm-network-svg" viewBox="0 0 400 400">
                                     <path className="network-line" d="M 200 200 L 80 80" />
                                     <path className="network-line" d="M 200 200 L 150 320" />
@@ -185,16 +215,12 @@ export default function ClientesFornecedoresPage() {
                                     <path className="network-line" d="M 200 200 L 310 300" />
                                     <path className="network-line" d="M 200 200 L 50 250" />
                                 </svg>
-
-                                {/* Nós (Sua Empresa, Clientes, Fornecedores) */}
                                 <div className="network-node node-center" style={{ top: 'calc(50% - 24px)', left: 'calc(50% - 24px)' }}></div>
                                 <div className="network-node node-client" style={{ top: 'calc(20% - 12px)', left: 'calc(20% - 12px)' }}></div>
                                 <div className="network-node node-client" style={{ top: 'calc(80% - 12px)', left: 'calc(37.5% - 12px)' }}></div>
                                 <div className="network-node node-client" style={{ top: 'calc(62.5% - 12px)', left: 'calc(12.5% - 12px)' }}></div>
                                 <div className="network-node node-supplier" style={{ top: 'calc(30% - 16px)', left: 'calc(82.5% - 16px)' }}></div>
                                 <div className="network-node node-supplier" style={{ top: 'calc(75% - 16px)', left: 'calc(77.5% - 16px)' }}></div>
-
-                                {/* Overlay com a UI de Métricas */}
                                 <div className="crm-ui-overlay">
                                     <div className="ui-metric">
                                         <span className="ui-metric-label">Clientes Conectados</span>
@@ -209,7 +235,7 @@ export default function ClientesFornecedoresPage() {
                         </div>
                     </div>
 
-                    {/* --- FEATURES GRID --- */}
+                    {/* --- FEATURES GRID (Conteúdo fiel ao sistema) --- */}
                     <AnimateInView delay={0.1}>
                         <div className="financeiro-features-section">
                             <div className="financeiro-section-header">
@@ -238,50 +264,57 @@ export default function ClientesFornecedoresPage() {
                         </div>
                     </AnimateInView>
 
-                    {/* --- SHOWCASE SECTION REDESIGNED --- */}
+                    {/* --- SHOWCASE SECTION COM CARROSSEL --- */}
                     <AnimateInView delay={0.4}>
                         <div className="financeiro-showcase-section">
                             <div className="financeiro-showcase-content">
+                                {/* Textos do carrossel */}
                                 <div className="financeiro-showcase-text">
                                     <div className="financeiro-showcase-badge">
-                                        <Zap size={16} />
-                                        <span>Segmentação Avançada</span>
+                                        {showcaseSlides[currentSlide].badgeIcon}
+                                        <span>{showcaseSlides[currentSlide].badgeText}</span>
                                     </div>
                                     <h2 className="financeiro-showcase-title">
-                                        Conheça seu Público
-                                        <span className="financeiro-gradient-text"> a Fundo</span>
+                                        {showcaseSlides[currentSlide].title}
+                                        <span className="financeiro-gradient-text"> {showcaseSlides[currentSlide].gradientText}</span>
                                     </h2>
                                     <p className="financeiro-showcase-description">
-                                        Segmente clientes por histórico de compras, localização ou tags personalizadas. Crie campanhas de marketing direcionadas e ofereça promoções que realmente convertem.
+                                        {showcaseSlides[currentSlide].description}
                                     </p>
                                     <div className="financeiro-showcase-stats">
-                                        <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">+30%</span>
-                                            <span className="financeiro-stat-label">Fidelização</span>
-                                        </div>
-                                        <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">1-to-1</span>
-                                            <span className="financeiro-stat-label">Comunicação</span>
-                                        </div>
-                                        <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">Targeted</span>
-                                            <span className="financeiro-stat-label">Marketing</span>
-                                        </div>
+                                        {showcaseSlides[currentSlide].stats.map((stat, index) => (
+                                            <div key={index} className="financeiro-stat-item">
+                                                <span className="financeiro-stat-number">{stat.number}</span>
+                                                <span className="financeiro-stat-label">{stat.label}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
-                                <div className="financeiro-showcase-image">
+                                {/* Imagem e controles do carrossel */}
+                                <div className="financeiro-showcase-image showcase-carousel-container">
                                     <div className="financeiro-image-frame">
-                                        <Image
-                                            src="/images/gallery-crm.png" // <-- Use uma imagem relevante para CRM
-                                            alt="Tela de segmentação de clientes do GestorX"
-                                            width={1200}
-                                            height={675}
-                                            style={{ width: '100%', height: 'auto' }}
-                                        />
+                                        {showcaseSlides.map((slide, index) => (
+                                            <div key={index} className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}>
+                                                <Image
+                                                    src={slide.imageSrc}
+                                                    alt={slide.imageAlt}
+                                                    width={1200}
+                                                    height={675}
+                                                    style={{ width: '100%', height: 'auto' }}
+                                                />
+                                            </div>
+                                        ))}
                                         <div className="financeiro-image-overlay">
                                             <div className="financeiro-overlay-gradient"></div>
                                         </div>
                                     </div>
+                                    {/* Botões de navegação */}
+                                    <button onClick={prevSlide} className="carousel-nav-button prev">
+                                        <ChevronLeft size={24} />
+                                    </button>
+                                    <button onClick={nextSlide} className="carousel-nav-button next">
+                                        <ChevronRight size={24} />
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +341,6 @@ export default function ClientesFornecedoresPage() {
                             </div>
                         </div>
                     </AnimateInView>
-
                 </div>
             </section>
 

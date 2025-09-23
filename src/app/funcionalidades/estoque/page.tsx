@@ -268,7 +268,7 @@ export default function EstoquePage() {
                                 </div>
                                 <div className="financeiro-showcase-image">
                                     <div className="financeiro-image-frame">
-                                        <Image src="/images/gallery-inventory.png" alt="Tela de relatórios de estoque do GestorX" width={1200} height={675} style={{ width: '100%', height: 'auto' }} />
+                                        <Image src="/images/gallery-estoque.png" alt="Tela de relatórios de estoque do GestorX" width={1200} height={675} style={{ width: '100%', height: 'auto' }} />
                                         <div className="financeiro-image-overlay"><div className="financeiro-overlay-gradient"></div></div>
                                     </div>
                                 </div>

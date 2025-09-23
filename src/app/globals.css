@@ -3996,3 +3996,64 @@ m .hero-title .gradient-text-white {
 .ui-metric-value {
   /* Estilos já definidos nos CSS anteriores */
 }
+
+/* Estilos para o container do carrossel */
+.showcase-carousel-container {
+  position: relative;
+}
+
+.financeiro-image-frame {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos para cada slide */
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  visibility: hidden;
+}
+
+.carousel-slide.active {
+  position: relative;
+  /* Ou static, dependendo do seu layout */
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Estilos para os botões de navegação */
+.carousel-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.carousel-nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-nav-button.prev {
+  left: 1rem;
+}
+
+.carousel-nav-button.next {
+  right: 1rem;
+}

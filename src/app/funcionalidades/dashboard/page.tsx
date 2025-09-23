@@ -8,59 +8,58 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FinanceBackground from '@/components/FinanceBackground';
-import { LayoutDashboard, CheckCircle, ArrowRight, TrendingUp, Users, Package, Download, Zap, Settings2, Bell, LayoutGrid, Target } from 'lucide-react';
+// Ícones atualizados para refletir as features do sistema
+import { LayoutDashboard, CheckCircle, ArrowRight, TrendingUp, Download, PieChart, BarChart, Bell, Target } from 'lucide-react';
 import AnimateInView from '@/components/AnimateInView';
 
-// Conteúdo focado no Dashboard
+// --- CONTEÚDO ATUALIZADO ---
+// O conteúdo agora reflete as funcionalidades exatas do seu dashboard em PyQt5.
 const dashboardFeatures = [
     {
-        icon: <LayoutGrid className="text-blue-400" />,
-        title: "Visão Geral Integrada",
-        description: "Acesse os dados vitais de finanças, estoque e vendas em um só lugar. Tenha uma visão panorâmica do seu negócio sem trocar de tela.",
-        highlight: "Tudo em Um",
+        icon: <LayoutDashboard className="text-blue-400" />,
+        title: "KPIs Essenciais na Grade",
+        description: "Acompanhe 6 indicadores chave em uma grade clara: Faturamento, Lucro Líquido, Margem Média, Nº de Vendas, Ticket Médio e Perdas.",
+        highlight: "Decisão Rápida",
         gradient: "from-blue-500/10 to-cyan-500/5"
     },
     {
-        icon: <TrendingUp className="text-emerald-400" />,
-        title: "KPIs em Tempo Real",
-        description: "Monitore os Indicadores Chave de Performance (KPIs) mais importantes para você. Faturamento, lucro, ticket médio e mais, atualizados instantaneamente.",
-        highlight: "Performance Agora",
+        icon: <Bell className="text-amber-400" />,
+        title: "Alertas Operacionais",
+        description: "Receba notificações visuais e imediatas sobre o status do seu negócio, incluindo produtos com estoque baixo, vencendo em 30 dias ou já vencidos.",
+        highlight: "Ação Imediata",
+        gradient: "from-amber-500/10 to-yellow-500/5"
+    },
+    {
+        icon: <PieChart className="text-emerald-400" />,
+        title: "Análise Detalhada com Gráficos",
+        description: "Vá além dos números. Analise os produtos mais vendidos, as formas de pagamento mais usadas e os principais clientes com gráficos de pizza e barras.",
+        highlight: "Insights Visuais",
         gradient: "from-emerald-500/10 to-green-500/5"
     },
     {
-        icon: <Settings2 className="text-purple-400" />,
-        title: "Relatórios Personalizáveis",
-        description: "Monte o dashboard do seu jeito. Arraste, solte e redimensione widgets para focar nas métricas que realmente importam para sua estratégia.",
-        highlight: "Sua Visão",
+        icon: <BarChart className="text-purple-400" />,
+        title: "Evolução de Vendas no Período",
+        description: "Filtre por dia, semana, mês ou período personalizado e visualize a evolução das suas vendas em um gráfico de linha interativo para identificar tendências.",
+        highlight: "Tendências Claras",
         gradient: "from-purple-500/10 to-indigo-500/5"
-    },
-    {
-        icon: <Bell className="text-amber-400" />,
-        title: "Alertas Inteligentes",
-        description: "Seja notificado proativamente sobre estoque baixo, metas atingidas ou qualquer evento crítico. Aja antes que vire um problema.",
-        highlight: "Ação Imediata",
-        gradient: "from-amber-500/10 to-yellow-500/5"
     }
 ];
 
 const benefits = [
-    "Decisões mais rápidas",
-    "Visão unificada",
-    "KPIs em tempo real",
-    "Performance na mão"
+    "Decisões baseadas em dados",
+    "Visão unificada do negócio",
+    "Alertas proativos",
+    "Análise de performance"
 ];
 
 export default function DashboardPage() {
-    // --- REF PARA A NOVA ANIMAÇÃO CRIATIVA ---
     const visualRef = useRef<HTMLDivElement | null>(null);
 
-    // --- NOVO useEffect COM A ANIMAÇÃO CRIATIVA DE DASHBOARD ---
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
         const visualElement = visualRef.current;
         if (!visualElement) return;
 
-        // --- Seletores ---
         const dataStreams = gsap.utils.toArray<SVGPathElement>('.data-stream-path');
         const dataCore = visualElement.querySelector('.data-core');
         const widgets = gsap.utils.toArray<HTMLDivElement>('.dash-widget');
@@ -68,14 +67,12 @@ export default function DashboardPage() {
         const revenueEl = visualElement.querySelector('.revenue-value');
         const salesEl = visualElement.querySelector('.sales-value');
 
-        // --- Estado Inicial ---
         gsap.set(visualElement, { autoAlpha: 0 });
         gsap.set(dataStreams, { strokeDasharray: 500, strokeDashoffset: 500 });
         gsap.set(dataCore, { scale: 0, autoAlpha: 0 });
         gsap.set(widgets, { scale: 0, autoAlpha: 0, transformOrigin: 'center center' });
         gsap.set(widgetContents, { autoAlpha: 0 });
 
-        // --- Timeline Principal ---
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: visualElement,
@@ -84,19 +81,14 @@ export default function DashboardPage() {
             }
         });
 
-        // FASE 1: O container e o núcleo aparecem
         tl.to(visualElement, { autoAlpha: 1, duration: 0.5 });
         tl.to(dataCore, { scale: 1, autoAlpha: 1, duration: 1, ease: 'elastic.out(1, 0.5)' }, "+=0.2");
-
-        // FASE 2: Os fluxos de dados são desenhados em direção ao núcleo
         tl.to(dataStreams, {
             strokeDashoffset: 0,
             autoAlpha: 1,
             duration: 1.5,
             ease: 'power2.inOut'
         }, "-=0.8");
-
-        // FASE 3: O núcleo pulsa e os widgets "explodem" para suas posições
         tl.to(dataCore, { scale: 0.8, duration: 0.3, ease: 'power2.inOut', repeat: 1, yoyo: true }, "-=0.5");
         tl.to(widgets, {
             scale: 1,
@@ -105,8 +97,6 @@ export default function DashboardPage() {
             stagger: 0.1,
             ease: 'back.out(1.7)'
         }, "-=0.2");
-
-        // FASE 4: O conteúdo dos widgets aparece e os números contam
         tl.to(widgetContents, { autoAlpha: 1, duration: 0.5, stagger: 0.1 }, "-=0.5");
 
         const counter = { revenue: 0, sales: 0 };
@@ -134,7 +124,7 @@ export default function DashboardPage() {
             <section className="financeiro-page-section relative">
                 <div className="container">
 
-                    {/* --- HERO SECTION --- */}
+                    {/* --- HERO SECTION (Conteúdo ajustado) --- */}
                     <div className="financeiro-hero-modern">
                         <div className="financeiro-hero-content">
                             <div className="financeiro-hero-badge">
@@ -158,21 +148,16 @@ export default function DashboardPage() {
                             </div>
                         </div>
 
-                        {/* --- NOVA ESTRUTURA JSX PARA A ANIMAÇÃO CRIATIVA DE DASHBOARD --- */}
+                        {/* Animação criativa (mantida) */}
                         <div className="financeiro-hero-visual">
                             <div ref={visualRef} className="dashboard-hero-visual">
-                                {/* SVG com os fluxos de dados */}
                                 <svg className="data-streams-svg" viewBox="0 0 500 500">
                                     <path className="data-stream-path stream-emerald" d="M 50 50 Q 150 250, 250 250" />
                                     <path className="data-stream-path stream-blue" d="M 450 50 Q 350 250, 250 250" />
                                     <path className="data-stream-path stream-purple" d="M 450 450 Q 350 250, 250 250" />
                                     <path className="data-stream-path stream-amber" d="M 50 450 Q 150 250, 250 250" />
                                 </svg>
-
-                                {/* Núcleo central de dados */}
                                 <div className="data-core"></div>
-
-                                {/* Widgets do Dashboard */}
                                 <div className="dash-widget" id="widget-revenue">
                                     <div className="widget-content">
                                         <span className="widget-label">Faturamento (Mês)</span>
@@ -201,7 +186,7 @@ export default function DashboardPage() {
                         </div>
                     </div>
 
-                    {/* --- FEATURES GRID --- */}
+                    {/* --- FEATURES GRID (Conteúdo fiel ao sistema) --- */}
                     <AnimateInView delay={0.1}>
                         <div className="financeiro-features-section">
                             <div className="financeiro-section-header">
@@ -230,42 +215,42 @@ export default function DashboardPage() {
                         </div>
                     </AnimateInView>
 
-                    {/* --- SHOWCASE SECTION REDESIGNED --- */}
+                    {/* --- SHOWCASE SECTION (Conteúdo fiel ao sistema) --- */}
                     <AnimateInView delay={0.4}>
                         <div className="financeiro-showcase-section">
                             <div className="financeiro-showcase-content">
                                 <div className="financeiro-showcase-text">
                                     <div className="financeiro-showcase-badge">
-                                        <Target size={16} />
-                                        <span>Metas e Objetivos</span>
+                                        <TrendingUp size={16} />
+                                        <span>Performance e Tendências</span>
                                     </div>
                                     <h2 className="financeiro-showcase-title">
-                                        Acompanhe suas Metas com
-                                        <span className="financeiro-gradient-text"> Precisão</span>
+                                        Analise a Performance
+                                        <span className="financeiro-gradient-text"> em Detalhes</span>
                                     </h2>
                                     <p className="financeiro-showcase-description">
-                                        Defina metas de vendas, crescimento ou aquisição de clientes e acompanhe o progresso em tempo real com gráficos visuais e projeções automáticas.
+                                        Filtre os dados pelo período desejado e mergulhe em análises detalhadas. Identifique seus produtos de maior sucesso, entenda o mix de pagamentos e reconheça seus clientes mais valiosos.
                                     </p>
                                     <div className="financeiro-showcase-stats">
                                         <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">Real-time</span>
-                                            <span className="financeiro-stat-label">Progresso</span>
+                                            <span className="financeiro-stat-number">Top 5</span>
+                                            <span className="financeiro-stat-label">Produtos</span>
                                         </div>
                                         <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">100%</span>
-                                            <span className="financeiro-stat-label">Customizável</span>
+                                            <span className="financeiro-stat-number">360°</span>
+                                            <span className="financeiro-stat-label">Pagamentos</span>
                                         </div>
                                         <div className="financeiro-stat-item">
-                                            <span className="financeiro-stat-number">Data-Driven</span>
-                                            <span className="financeiro-stat-label">Decisões</span>
+                                            <span className="financeiro-stat-number">VIP</span>
+                                            <span className="financeiro-stat-label">Clientes</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="financeiro-showcase-image">
                                     <div className="financeiro-image-frame">
                                         <Image
-                                            src="/images/gallery-main-dashboard.png" // <-- Imagem principal do dashboard
-                                            alt="Tela de metas e objetivos do GestorX"
+                                            src="/images/gallery-dashboard.png"
+                                            alt="Tela do dashboard principal do GestorX"
                                             width={1200}
                                             height={675}
                                             style={{ width: '100%', height: 'auto' }}
