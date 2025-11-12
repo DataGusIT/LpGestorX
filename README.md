@@ -23,7 +23,7 @@ Construída com Next.js para garantir performance e uma excelente experiência d
 
 | Página Principal |
 | :---: |
-| ![Landing Page do GestorX](link-para-sua-imagem-aqui) |
+| <img width="1919" height="913" alt="Image" src="https://github.com/user-attachments/assets/6a296249-c39d-4f00-bc24-49f657b991bd" /> |
 
 ## ✨ Funcionalidades
 
